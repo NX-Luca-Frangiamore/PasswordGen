@@ -21,13 +21,18 @@ namespace PasswordGen.Service
         }
 
         public override bool newPassword(int _idUtente, Password _password)
-        {
-            throw new NotImplementedException();
+        {   
+            var utente = db.utente.Find(_idUtente);
+            if ( utente== null) return false;
+            utente.passwords.Append(_password);
+            db.SaveChanges();
+            return true;
+            
         }
 
         public override bool newUtente(string _username, string _password)
         {
-            if (db.utente.Where(x => x.username == _username) != null) return false;
+            if (db.utente.Where(x => x.username == _username).FirstOrDefault() != null) return false;
             db.utente.Add(new Utente { username = _username, password = _password });
             db.SaveChanges();
             return true;
