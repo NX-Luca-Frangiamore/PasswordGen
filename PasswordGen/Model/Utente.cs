@@ -6,6 +6,6 @@
         public string username { get; set; }
         public string password { get; set; }
 
-        public virtual IEnumerable<Password> passwords { get; set; }
+        public virtual List<Password> passwords { get; set; }
     }
 }
