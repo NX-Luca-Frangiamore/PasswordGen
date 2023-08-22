@@ -31,6 +31,23 @@ namespace PasswordGen.Service
             return true;
         }
 
+        public override bool deletePassword(int _idUtente, string _nome)
+        {
+            var r = db.passwords.Where(x => x.utenteId == _idUtente && x.name == _nome);
+            if (r == null) return false;
+            r.ExecuteDelete();
+            db.SaveChanges();
+            return true;
+        }
+        public override bool deleteUtente(int _idUtente)
+        {
+            var r = db.utente.Where(x=>x.id==_idUtente);
+            if(r == null) return false;
+            r.ExecuteDelete();
+            db.SaveChanges();
+            return true;
+        }
+
         public override int getId(string _username, string _password)
         {
             return db.utente.Where(x=>x.username==_username && x.password==_password).Select(x=>x.id).FirstOrDefault();
@@ -40,8 +57,7 @@ namespace PasswordGen.Service
         {
             var r=getPassword(_idUtente).Where(x => x.name == _name).FirstOrDefault();
             if(r==null) return null;
-            return r;
-           
+            return r; 
         }
 
         public override List<Password>? getPassword(int _idUtente)
