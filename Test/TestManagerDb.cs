@@ -13,7 +13,7 @@ namespace Test
     public class TestManagerDb
     {
         [Fact]
-        public void InserimentoUtente()
+        public void InserimentoStampaUtente()
         {
             var opt = new DbContextOptionsBuilder<Context>()
             .UseInMemoryDatabase(databaseName: "Context")
@@ -29,7 +29,7 @@ namespace Test
 
         }
         [Fact]
-        public void InserimentoPassword()
+        public void InserimentoStampaPassword()
         {
             var opt = new DbContextOptionsBuilder<Context>()
             .UseInMemoryDatabase(databaseName: "Context")
@@ -40,8 +40,6 @@ namespace Test
             Assert.True(db.newPassword(1, new Password { name = "email", password = "1233" }));
             Assert.True(db.getPassword(1, "email")!=null);
          
-
-
         }
     }
 }
