@@ -9,6 +9,26 @@ namespace PasswordGen.Service
         {
         }
 
+        public override bool changePassword(int _idUtente, string _name, string _newPassword)
+        {
+            var r=db.utente.Find(_idUtente).passwords.Where(x => x.name == _name).FirstOrDefault();
+            if (r == null) return false;
+            r.password = _newPassword;
+            return true;
+        }
+
+        public override bool changeUtente(string _username, string _password, string _newUsername,string _newPassword)
+        {
+            var r=db.utente.Where(x => x.username == _username && x.password == _password).FirstOrDefault();
+            if (r == null) return false;
+            if(_newPassword!="")
+               r.password = _newPassword;
+            if (_newUsername != "")
+                r.username = _newUsername;
+
+            return true;
+        }
+
         public override int getId(string _username, string _password)
         {
             return db.utente.Where(x=>x.username==_username && x.password==_password).Select(x=>x.id).FirstOrDefault();
@@ -16,10 +36,17 @@ namespace PasswordGen.Service
 
         public override Password? getPassword(int _idUtente, string _name)
         {
-            var r=db.utente.Include(x => x.passwords).Where(x => x.id == _idUtente).Select(x => x.passwords.Where(x => x.name == _name)).FirstOrDefault();
+            var r=getPassword(_idUtente).Where(x => x.name == _name).FirstOrDefault();
             if(r==null) return null;
-            return r.FirstOrDefault();
+            return r;
            
+        }
+
+        public override List<Password>? getPassword(int _idUtente)
+        {
+            var r=db.utente.Include(x => x.passwords).Where(x => x.id == _idUtente).Select(x => x.passwords).FirstOrDefault();
+            if (r == null) return null;
+            return r;
         }
 
         public override bool newPassword(int _idUtente, Password _password)
