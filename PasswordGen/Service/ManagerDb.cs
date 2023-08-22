@@ -14,6 +14,8 @@ namespace PasswordGen.Service
             var r=db.utente.Find(_idUtente).passwords.Where(x => x.name == _name).FirstOrDefault();
             if (r == null) return false;
             r.password = _newPassword;
+            db.SaveChanges();
+
             return true;
         }
 
@@ -25,7 +27,7 @@ namespace PasswordGen.Service
                r.password = _newPassword;
             if (_newUsername != "")
                 r.username = _newUsername;
-
+            db.SaveChanges();
             return true;
         }
 
