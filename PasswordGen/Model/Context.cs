@@ -6,7 +6,7 @@ namespace PasswordGen.Model
     {
         public Context(DbContextOptions opt) : base(opt) { }
         public DbSet<Utente> utente { get; set; }
-        DbSet<Password> passwords { get; set; }
+        public DbSet<Password> passwords { get; set; }
 
     }
 }
