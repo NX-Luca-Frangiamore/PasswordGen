@@ -16,7 +16,9 @@ namespace PasswordGen.Service
 
         public override Password? getPassword(int _idUtente, string _name)
         {
-            return db.utente.Include(x => x.passwords).Where(x => x.id == _idUtente).Select(x => x.passwords.Where(x => x.name == _name)).FirstOrDefault().FirstOrDefault();
+            var r=db.utente.Include(x => x.passwords).Where(x => x.id == _idUtente).Select(x => x.passwords.Where(x => x.name == _name)).FirstOrDefault();
+            if(r==null) return null;
+            return r.FirstOrDefault();
            
         }
 
