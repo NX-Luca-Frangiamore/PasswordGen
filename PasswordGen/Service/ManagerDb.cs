@@ -25,7 +25,9 @@ namespace PasswordGen.Service
         public override bool newPassword(int _idUtente, Password _password)
         {   
             var utente = db.utente.Find(_idUtente);
+          
             _password.utenteId = _idUtente;
+            db.passwords.Add(_password);
             if ( utente== null) return false;
             utente.passwords.Add(_password);
             db.SaveChanges();
