@@ -55,8 +55,9 @@ namespace PasswordGen.Service
 
         public override Password? getPassword(int _idUtente, string _name)
         {
-            var r=getPassword(_idUtente).Where(x => x.name == _name).FirstOrDefault();
-            if(r==null) return null;
+            Password r=null;
+            if(getPassword(_idUtente) is List<Password>listPassword)
+                 r=listPassword.Where(x => x.name == _name).FirstOrDefault();
             return r; 
         }
 
