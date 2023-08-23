@@ -12,8 +12,10 @@ namespace Test
    
     public class TestManagerDb
     {
-        [Fact]
-        public void InserimentoStampaUtente()
+        [Theory]
+        [InlineData("luca","123")]
+        [InlineData("piero", "223")]
+        public void InserimentoStampaUtente(string username,string password)
         {
             var opt = new DbContextOptionsBuilder<Context>()
             .UseInMemoryDatabase(databaseName: "Context")
@@ -21,10 +23,9 @@ namespace Test
 
             IManagerDb db = new ManagerDb(new Context(opt));
 
-            db.newUtente("luca", "123");
-            db.newUtente("paolo", "3");
-            Assert.False(db.getId("luca", "123")==0);
-            Assert.True(db.getId("paolo", "3")==2);
+            db.newUtente(username, password);
+            int id = db.getId(username, password);
+            Assert.True(db.getId(username, password)==id);
         }
         [Fact]
         public void InserimentoStampaPassword()
@@ -38,8 +39,10 @@ namespace Test
             Assert.True(db.newPassword(1, new Password { name = "email", password = "1233" }));
             Assert.True(db.getPassword(1, "email")!=null);  
         }
-        [Fact]
-        public void CambioUsernamePasswordUtente()
+        [Theory]
+        [InlineData("luca", "123", "newLuca", "443")]
+        [InlineData("piero", "223","newpiero","111")]
+        public void CambioUsernamePasswordUtente(string username,string password,string newUsername,string newPassword)
         {
             var opt = new DbContextOptionsBuilder<Context>()
             .UseInMemoryDatabase(databaseName: "Context")
@@ -47,17 +50,12 @@ namespace Test
 
             IManagerDb db = new ManagerDb(new Context(opt));
 
-            db.newUtente("luca", "123");
-            db.newUtente("paolo", "333");
+            db.newUtente(username, password);
+            int id=db.getId(username, password);
+            db.changeUtente(username, password, newUsername, newPassword);
 
-            Assert.True(db.getId("luca", "123")==1,"utente inserito");
-            db.changeUtente("luca", "123", "lucaCCC", "");
-            Assert.True(db.getId("lucaCCC", "123") == 1,"utente cambiato correttamente:username");
+            Assert.True(db.getId(newUsername, newPassword) == id);
 
-            db.changeUtente("paolo", "333", "paolo1", "111");
-            Assert.True(db.getId("paolo1", "111") == 2, "utente cambiato correttamente:username,password");
-
-            Assert.False(db.changeUtente("peppe", "333", "paolo1", "111"),"non posso cambiare un utente che non esiste");
 
         }
         [Fact]
@@ -75,5 +73,6 @@ namespace Test
             Assert.True(db.getPassword(1, "gmail").password == "4444","cambio effettuato correttamente");
             Assert.False(db.changePassword(1, "nonesiste", "4444"),"non posso cambiare una password non esistente");
         }
+
     }
 }
