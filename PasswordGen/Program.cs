@@ -11,9 +11,7 @@ builder.Services.AddScoped<IManagerDb, ManagerDb>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
-MinimalApi api = MinimalApi.getInstant(app);
 
-api.ApiPost();
-api.ApiGet();
-api.ApiPut();
+app.AddEndPointPassword().AddEndPointUtente();
+
 app.Run();
