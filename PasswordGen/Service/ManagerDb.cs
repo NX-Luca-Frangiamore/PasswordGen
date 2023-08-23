@@ -33,17 +33,17 @@ namespace PasswordGen.Service
 
         public override bool deletePassword(int _idUtente, string _nome)
         {
-            var r = db.passwords.Where(x => x.utenteId == _idUtente && x.name == _nome);
+            var r = db.passwords.Where(x => x.utenteId == _idUtente && x.name == _nome).FirstOrDefault();
             if (r == null) return false;
-            r.ExecuteDelete();
+            db.passwords.Remove(r);
             db.SaveChanges();
             return true;
         }
         public override bool deleteUtente(int _idUtente)
         {
-            var r = db.utente.Where(x=>x.id==_idUtente);
+            var r = db.utente.Where(x=>x.id==_idUtente).FirstOrDefault();
             if(r == null) return false;
-            r.ExecuteDelete();
+            db.utente.Remove(r);
             db.SaveChanges();
             return true;
         }
