@@ -34,6 +34,9 @@ namespace PasswordGen.Service
         public override bool deletePassword(int _idUtente, string _nome)
         {
             var r = db.passwords.Where(x => x.utenteId == _idUtente && x.name == _nome).FirstOrDefault();
+            var rUtenti = db.utente.Where(x=>x.id==_idUtente).Include(x => x.passwords).FirstOrDefault().passwords;
+            if(rUtenti.Count == 0) return false;
+               rUtenti.Remove(rUtenti.Where(x => x.name == _nome).First());
             if (r == null) return false;
             db.passwords.Remove(r);
             db.SaveChanges();
@@ -42,6 +45,9 @@ namespace PasswordGen.Service
         public override bool deleteUtente(int _idUtente)
         {
             var r = db.utente.Where(x=>x.id==_idUtente).FirstOrDefault();
+            var rPasswords = db.passwords.Where(x => x.utenteId == _idUtente);
+            foreach (Password p in rPasswords)
+                db.passwords.Remove(p);
             if(r == null) return false;
             db.utente.Remove(r);
             db.SaveChanges();
