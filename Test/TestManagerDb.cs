@@ -73,6 +73,43 @@ namespace Test
             Assert.True(db.getPassword(1, "gmail").password == "4444","cambio effettuato correttamente");
             Assert.False(db.changePassword(1, "nonesiste", "4444"),"non posso cambiare una password non esistente");
         }
+        [Theory]
+        [InlineData("luca", "123","gmail","111")]
+        [InlineData("luca", "123", "ff", "1fe11")]
+        public void DeleteUtente(string username, string passwordUtente,string nomePassword,string password)
+        {
+            var opt = new DbContextOptionsBuilder<Context>()
+            .UseInMemoryDatabase(databaseName: "Context")
+            .UseLazyLoadingProxies().Options;
+
+            IManagerDb db = new ManagerDb(new Context(opt));
+      
+            db.newUtente(username, passwordUtente);
+            int id = db.getId(username, passwordUtente);
+            db.newPassword(id,new Password { name=nomePassword, password=password});
+            db.deleteUtente(id);
+            Assert.False(db.getId(username, passwordUtente) == id);
+            Assert.True(db.getPassword(id,nomePassword) ==null);
+
+        }
+        [Theory]
+        [InlineData("luca", "123", "gmail", "111")]
+        [InlineData("luca", "123", "ff", "1fe11")]
+        public void DeletePassword(string username, string passwordUtente, string nomePassword, string password)
+        {
+            var opt = new DbContextOptionsBuilder<Context>()
+            .UseInMemoryDatabase(databaseName: "Context")
+            .UseLazyLoadingProxies().Options;
+
+            IManagerDb db = new ManagerDb(new Context(opt));
+           
+              db.newUtente(username, passwordUtente);
+            int id = db.getId(username, passwordUtente);
+            db.newPassword(id, new Password { name = nomePassword, password = password });
+            db.deletePassword(id,nomePassword);
+            Assert.True(db.getPassword(id, nomePassword) == null);
+
+        }
 
     }
 }
