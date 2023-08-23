@@ -74,6 +74,13 @@ namespace PasswordGen.Service
             return r;
         }
 
+        public override Utente getUtente(int _idUtente)
+        {
+           if(db.utente.Find(_idUtente) is Utente utente)
+                return utente;
+           return null;
+        }
+
         public override bool newPassword(int _idUtente, Password _password)
         {   
             var utente = db.utente.Find(_idUtente);
