@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PasswordGen.Model;
 using PasswordGen.Model.Configurator;
 using System.Reflection.Metadata;
 
-namespace PasswordGen.Model
+namespace PasswordGen.Data
 {
-    public class Context :DbContext
+    public class Context : DbContext
     {
         public Context(DbContextOptions opt) : base(opt) { }
         public DbSet<Utente> Utente { get; set; }
@@ -13,7 +14,7 @@ namespace PasswordGen.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ConfUtente).Assembly);
 
         }

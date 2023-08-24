@@ -1,22 +1,20 @@
-﻿namespace PasswordGen.Model
+﻿using System.Runtime.InteropServices;
+
+namespace PasswordGen.Model
 {
     public class Utente
     {
         public int Id { get; set; }
         public string UsernameUtente { get; set; }
         public string PasswordUtente { get; set; }
-        public virtual List<PasswordModel> PasswordList { get; set; }
+        public virtual List<PasswordModel> PasswordList { get; set; }=new List<PasswordModel>();
         public bool AddPassword(string name, string password)
         {
-            try
+            if (PasswordModel.Create(name, password) is PasswordModel p)
             {
-                PasswordList.Add(new PasswordModel(name, password));
+                PasswordList.Add(p);
+                return true;
             }
-            catch (Exception e)
-            {                 
-                Console.WriteLine(e);
-                return false;
-            }          
             return true;
         }
         public bool DeletePassword(string name)
@@ -38,16 +36,19 @@
                 return p;
             return null;
         }
-        
-        public Utente(string UsernameUtente, string PasswordUtente)
+        private Utente(string UsernameUtente, string PasswordUtente)
+        {
+                this.UsernameUtente = UsernameUtente;
+                this.PasswordUtente = PasswordUtente;
+        }
+        public static Utente? Create(string UsernameUtente, string PasswordUtente)
         {
             if (CredenzialiManger.Verifica(UsernameUtente, PasswordUtente))
             {
-                this.UsernameUtente = UsernameUtente;
-                this.PasswordUtente = PasswordUtente;
+                return new Utente(UsernameUtente, PasswordUtente);
             }
             else
-                throw new Exception("credenziali di registrazione non corrette");
+                return null;
         }
         public bool ChangeCredenziali(string username,string password)
         {
@@ -57,7 +58,7 @@
                 this.UsernameUtente = username;
                 Changed = true;
             }
-            if (CredenzialiManger.VerificaUserName(password))
+            if (CredenzialiManger.VerificaPassword(password))
             {
                 this.PasswordUtente = password;
                 Changed = true;
