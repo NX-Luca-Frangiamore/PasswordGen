@@ -43,7 +43,7 @@ namespace PasswordGen
                 ApiPassword.MapGet("get", async (string username, string passwordUtente, string namePassword, IPasswordManager ManagerP) =>
                 {
 
-                    return TypedResults.Ok(await ManagerP.GetPassword(username, passwordUtente, namePassword));
+                    return TypedResults.Ok(await ManagerP.GetPassword(username, passwordUtente));
                 });
                 ApiPassword.MapGet("get/all", async (string username, string passwordUtente, IPasswordManager ManagerP) =>
                 {
