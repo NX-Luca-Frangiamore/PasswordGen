@@ -4,7 +4,7 @@ using PasswordGen.Service.Db;
 
 namespace PasswordGen.Service.Logic.LogicPassword
 {
-    public interface IManagerPassword
+    public interface IPasswordManager
 
     {
        

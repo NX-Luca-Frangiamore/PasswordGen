@@ -12,7 +12,7 @@ builder.Services.AddSqlite<Context>("Data Source=Context.db");//il db si chiama 
 builder.Services.AddDbContext<Context>(options => options.UseLazyLoadingProxies().UseSqlite(builder.Configuration.GetConnectionString("Context")));
 builder.Services.AddScoped<IManagerDb, ManagerDb>();
 builder.Services.AddScoped<IUtenteRepository, UtenteRepository>();
-builder.Services.AddScoped<IManagerPassword, ManagerPassword>();
+builder.Services.AddScoped<IPasswordManager, PasswordManager>();
 builder.Services.AddControllers();
 
 var app = builder.Build();

@@ -35,22 +35,22 @@ namespace PasswordGen
             public static WebApplication AddEndPointPassword(this WebApplication app)
             {
                 var ApiPassword = app.MapGroup("api/password");
-                ApiPassword.MapPost("new", async (string username, string passwordUtente, string namePassword, string password, IManagerPassword ManagerP) =>
+                ApiPassword.MapPost("new", async (string username, string passwordUtente, string namePassword, string password, IPasswordManager ManagerP) =>
                 {
 
                     return TypedResults.Ok(await ManagerP.NewPassword(username, passwordUtente, namePassword, password));
                 });
-                ApiPassword.MapGet("get", async (string username, string passwordUtente, string namePassword, IManagerPassword ManagerP) =>
+                ApiPassword.MapGet("get", async (string username, string passwordUtente, string namePassword, IPasswordManager ManagerP) =>
                 {
 
                     return TypedResults.Ok(await ManagerP.GetPassword(username, passwordUtente, namePassword));
                 });
-                ApiPassword.MapGet("get/all", async (string username, string passwordUtente, IManagerPassword ManagerP) =>
+                ApiPassword.MapGet("get/all", async (string username, string passwordUtente, IPasswordManager ManagerP) =>
                 {
 
                     return TypedResults.Ok(await ManagerP.GetPassword(username, passwordUtente));
                 });
-                ApiPassword.MapPut("change", async (string username, string passwordUtente, string namePassword, string password, IManagerPassword ManagerP) =>
+                ApiPassword.MapPut("change", async (string username, string passwordUtente, string namePassword, string password, IPasswordManager ManagerP) =>
                 {
 
                     return TypedResults.Ok(await ManagerP.ChangePassword(username, passwordUtente, namePassword, password));

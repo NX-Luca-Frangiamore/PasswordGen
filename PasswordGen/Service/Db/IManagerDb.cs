@@ -12,6 +12,8 @@ namespace PasswordGen.Service.Db
         public abstract Task<bool> NewUtente(Utente utente);
 
         public abstract Task<bool> DeleteUtente(string username, string passwordUsername);
+        public abstract Task<Utente?> GetUtenteWithPassword(string username, string passwordUsername);
+
         public abstract Task<bool> Save();
     }
 }
