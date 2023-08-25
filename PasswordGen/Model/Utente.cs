@@ -19,23 +19,17 @@ namespace PasswordGen.Model
         }
         public bool DeletePassword(string name)
         {
-            try
-            {
-                if (GetPassword(name) is PasswordModel p)
-                    return PasswordList.Remove(p);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+            if (GetPassword(name) is PasswordModel p)
+                return PasswordList.Remove(p);
             return false;
         }
         public PasswordModel? GetPassword(string name)
         {
-            if (PasswordList.Where(x => x.Name == name) is PasswordModel p)
+            if (PasswordList.Where(x => x.Name == name).FirstOrDefault() is PasswordModel p)
                 return p;
             return null;
         }
+        public Utente() { }//Per test
         private Utente(string UsernameUtente, string PasswordUtente)
         {
                 this.UsernameUtente = UsernameUtente;

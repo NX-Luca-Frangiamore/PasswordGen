@@ -4,10 +4,10 @@ using PasswordGen.Service.Logic.LogicUtente;
 
 namespace PasswordGen.Data
 {
-    public class UtenteRepository : IUtenteRepository
+    public class UtenteManager : IUtenteManager
     {
         readonly IManagerDb Db;
-        public UtenteRepository(IManagerDb db)
+        public UtenteManager(IManagerDb db)
         {
             Db = db;
         }

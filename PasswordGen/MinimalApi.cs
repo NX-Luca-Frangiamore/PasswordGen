@@ -14,19 +14,19 @@ namespace PasswordGen
             public static WebApplication AddEndPointUtente(this WebApplication app)
             {
                 var ApiUtente = app.MapGroup("api/utente");
-                ApiUtente.MapPost("new", async (string username, string password, IUtenteRepository MangerU) =>
+                ApiUtente.MapPost("new", async (string username, string password, IUtenteManager MangerU) =>
                 {
                     return TypedResults.Ok(await MangerU.NewUtente(username, password));
                 });
-                ApiUtente.MapGet("get", async (string username, string password, IUtenteRepository MangerU) =>
+                ApiUtente.MapGet("get", async (string username, string password, IUtenteManager MangerU) =>
                 {
                     return TypedResults.Ok(await MangerU.GetUtente(username, password));
                 });
-                ApiUtente.MapPut("change", async (string username, string password, string usernameNew, string passwordNew, IUtenteRepository MangerU) =>
+                ApiUtente.MapPut("change", async (string username, string password, string usernameNew, string passwordNew, IUtenteManager MangerU) =>
                 {
                     return TypedResults.Ok(await MangerU.ChangeUtente(username, password, usernameNew, passwordNew));
                 });
-                ApiUtente.MapPut("delete", async (string username, string password, IUtenteRepository MangerU) =>
+                ApiUtente.MapPut("delete", async (string username, string password, IUtenteManager MangerU) =>
                 {
                     return TypedResults.Ok(await MangerU.DeleteUtente(username, password));
                 });

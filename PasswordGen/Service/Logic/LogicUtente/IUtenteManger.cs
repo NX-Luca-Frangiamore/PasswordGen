@@ -4,7 +4,7 @@ using PasswordGen.Service.Db;
 
 namespace PasswordGen.Service.Logic.LogicUtente
 {
-    public interface IUtenteRepository
+    public interface IUtenteManager
 
     {   
         abstract public Task<bool> NewUtente(string username, string password);

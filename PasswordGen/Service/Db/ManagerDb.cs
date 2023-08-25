@@ -25,7 +25,7 @@ namespace PasswordGen.Service.Db
         }
         public override async Task<Utente?> GetUtenteWithPassword(string username, string passwordUsername)
         {
-            return await db.Utente.Include(x => x.PasswordList).Where(x => x.UsernameUtente == username && x.PasswordUtente == passwordUsername).FirstOrDefaultAsync();
+            return await db.Utente.Include(x=>x.PasswordList).Where(x => x.UsernameUtente == username && x.PasswordUtente == passwordUsername).FirstOrDefaultAsync();
         }
         public override async Task<bool> Save()
         {

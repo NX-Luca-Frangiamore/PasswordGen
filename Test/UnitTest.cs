@@ -19,7 +19,8 @@ namespace Test
         public void Cambio_CredenzialiUtente_NonAvvenuto(string username, string password,string newPassword)
         {
 
-            Utente u=Utente.Create(username, password);
+            Utente? u=Utente.Create(username, password);
+
             u.ChangeCredenziali("", newPassword);
            
             u.UsernameUtente.Should().Be(username);

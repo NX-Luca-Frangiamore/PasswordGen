@@ -37,7 +37,8 @@ namespace PasswordGen.Data
 
         public async Task<PasswordModel?> GetPassword(string username, string passwordUtente, string nomePassword)
         {
-            if (await Db.GetUtenteWithPassword(username, passwordUtente) is Utente u)
+            var a = (await Db.GetUtenteWithPassword(username, passwordUtente));
+            if (a is Utente u)
             {
                 return u.GetPassword(nomePassword);
             }
@@ -55,7 +56,7 @@ namespace PasswordGen.Data
 
         public async Task<bool> NewPassword(string username, string passwordUtente, string nomePassword, string password)
         {
-            if (await Db.GetUtenteWithPassword(username, passwordUtente) is Utente u)
+            if ((await Db.GetUtenteWithPassword(username, passwordUtente)) is Utente u)
             {
                 if (u.AddPassword(nomePassword, password))
                 {

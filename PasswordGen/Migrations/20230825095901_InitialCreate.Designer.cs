@@ -10,7 +10,7 @@ using PasswordGen.Data;
 namespace PasswordGen.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230825070336_InitialCreate")]
+    [Migration("20230825095901_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
