@@ -19,7 +19,7 @@ namespace Test
               .UseInMemoryDatabase(databaseName: "Context")
               .UseLazyLoadingProxies().Options;
             Context contex = new(opt);
-            contex.Database.EnsureDeleted();
+           
             IManagerDb db = new ManagerDb(contex);
             return (new UtenteManager(db), new PasswordManager(db));
 

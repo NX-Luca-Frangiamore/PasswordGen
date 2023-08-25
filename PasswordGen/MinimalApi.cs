@@ -8,7 +8,6 @@ using PasswordGen.Service.Logic.LogicPassword;
 namespace PasswordGen
 {
 
-    
     public static class AppRouteExtensions
     {
             public static WebApplication AddEndPointUtente(this WebApplication app)
