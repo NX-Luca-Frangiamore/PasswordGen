@@ -15,7 +15,7 @@ namespace PasswordGen.Model
                 PasswordList.Add(p);
                 return true;
             }
-            return true;
+            return false;
         }
         public bool DeletePassword(string name)
         {
