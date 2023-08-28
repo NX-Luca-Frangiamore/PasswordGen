@@ -1,12 +1,12 @@
 ﻿using PasswordGen.Model;
 using PasswordGen.Repository;
 
-namespace PasswordGen.Service.LogicUtente
+namespace PasswordGen.Service.UtenteService
 {
-    public class UtenteManager : IUtenteManager
+    public class UtenteService : IUtenteService
     {
         readonly IManagerDb Db;
-        public UtenteManager(IManagerDb db)
+        public UtenteService(IManagerDb db)
         {
             Db = db;
         }

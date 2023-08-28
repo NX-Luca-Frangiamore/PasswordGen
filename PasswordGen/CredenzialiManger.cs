@@ -9,7 +9,7 @@
         }
         public static bool VerificaPassword(string password) {
             if (string.IsNullOrEmpty(password)) return false;
-            if (password.Length < 5) return false;
+            if (password.Length < 3) return false;
             if (password.Length >= 10) return false;
             return true;
         }

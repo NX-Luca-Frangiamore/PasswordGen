@@ -1,8 +1,8 @@
 ﻿using PasswordGen.Service;
 using PasswordGen;
 using System.Runtime.CompilerServices;
-using PasswordGen.Service.LogicUtente;
-using PasswordGen.Service.LogicPassword;
+using PasswordGen.Service.UtenteService;
+using PasswordGen.Service.PasswordService;
 
 namespace PasswordGen
 {
@@ -12,19 +12,19 @@ namespace PasswordGen
             public static WebApplication AddEndPointUtente(this WebApplication app)
             {
                 var ApiUtente = app.MapGroup("api/utente");
-                ApiUtente.MapPost("new", async (string username, string password, IUtenteManager MangerU) =>
+                ApiUtente.MapPost("new", async (string username, string password, IUtenteService MangerU) =>
                 {
                     return TypedResults.Ok(await MangerU.NewUtente(username, password));
                 });
-                ApiUtente.MapGet("get", async (string username, string password, IUtenteManager MangerU) =>
+                ApiUtente.MapGet("get", async (string username, string password, IUtenteService MangerU) =>
                 {
                     return TypedResults.Ok(await MangerU.GetUtente(username, password));
                 });
-                ApiUtente.MapPut("change", async (string username, string password, string usernameNew, string passwordNew, IUtenteManager MangerU) =>
+                ApiUtente.MapPut("change", async (string username, string password, string usernameNew, string passwordNew, IUtenteService MangerU) =>
                 {
                     return TypedResults.Ok(await MangerU.ChangeUtente(username, password, usernameNew, passwordNew));
                 });
-                ApiUtente.MapPut("delete", async (string username, string password, IUtenteManager MangerU) =>
+                ApiUtente.MapPut("delete", async (string username, string password, IUtenteService MangerU) =>
                 {
                     return TypedResults.Ok(await MangerU.DeleteUtente(username, password));
                 });
@@ -33,22 +33,22 @@ namespace PasswordGen
             public static WebApplication AddEndPointPassword(this WebApplication app)
             {
                 var ApiPassword = app.MapGroup("api/password");
-                ApiPassword.MapPost("new", async (string username, string passwordUtente, string namePassword, string password, IPasswordManager ManagerP) =>
+                ApiPassword.MapPost("new", async (string username, string passwordUtente, string namePassword, string password, IPasswordService ManagerP) =>
                 {
 
                     return TypedResults.Ok(await ManagerP.NewPassword(username, passwordUtente, namePassword, password));
                 });
-                ApiPassword.MapGet("get", async (string username, string passwordUtente, string namePassword, IPasswordManager ManagerP) =>
+                ApiPassword.MapGet("get", async (string username, string passwordUtente, string namePassword, IPasswordService ManagerP) =>
                 {
 
                     return TypedResults.Ok(await ManagerP.GetPassword(username, passwordUtente));
                 });
-                ApiPassword.MapGet("get/all", async (string username, string passwordUtente, IPasswordManager ManagerP) =>
+                ApiPassword.MapGet("get/all", async (string username, string passwordUtente, IPasswordService ManagerP) =>
                 {
 
                     return TypedResults.Ok(await ManagerP.GetPassword(username, passwordUtente));
                 });
-                ApiPassword.MapPut("change", async (string username, string passwordUtente, string namePassword, string password, IPasswordManager ManagerP) =>
+                ApiPassword.MapPut("change", async (string username, string passwordUtente, string namePassword, string password, IPasswordService ManagerP) =>
                 {
 
                     return TypedResults.Ok(await ManagerP.ChangePassword(username, passwordUtente, namePassword, password));

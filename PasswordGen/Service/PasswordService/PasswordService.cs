@@ -1,12 +1,12 @@
 ﻿using PasswordGen.Model;
 using PasswordGen.Repository;
 
-namespace PasswordGen.Service.LogicPassword
+namespace PasswordGen.Service.PasswordService
 {
-    public class PasswordManager : IPasswordManager
+    public class PasswordService : IPasswordService
     {
         readonly IManagerDb Db;
-        public PasswordManager(IManagerDb db)
+        public PasswordService(IManagerDb db)
         {
             Db = db;
         }
@@ -17,8 +17,8 @@ namespace PasswordGen.Service.LogicPassword
             {
                 if (u.GetPassword(nomePassword) is PasswordModel p)
                 {
-                    p.SetPassword(newPassword);
-                    return await Db.Save();
+                   
+                    return await Db.Save() && p.SetPassword(newPassword);
                 }
             }
             return false;
@@ -28,8 +28,8 @@ namespace PasswordGen.Service.LogicPassword
         {
             if (await Db.GetUtenteWithPassword(username, passwordUtente) is Utente u)
             {
-                u.DeletePassword(nomePassword);
-                return await Db.Save();
+                return u.DeletePassword(nomePassword) && await Db.Save();
+               
             }
             return false;
         }
