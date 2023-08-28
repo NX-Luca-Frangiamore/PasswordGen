@@ -124,5 +124,37 @@ namespace UnitTest
             (await passwordService.DeletePassword(username, passwordUsername, passwordName)).Should().Be(true);
 
         }
+        [Theory]
+        [InlineData("luca", "123f3g", "", "24442")]
+        [InlineData("luca", "3ffrfr3g", "gmail", "8")]
+        [InlineData("luca", "", "gmail", "8")]
+
+        public async void Printing_NoExistentPassword_NotAllowed(string username, string passwordUsername, string passwordName, string password)
+        {
+            Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
+            mock.Setup(x => x.GetUtenteWithPassword(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
+            mock.Setup(x => x.Save()).ReturnsAsync(true);
+            IPasswordService passwordService = new PasswordService(mock.Object);
+            await passwordService.NewPassword(username, passwordUsername, passwordName, password);
+
+            (await passwordService.GetPassword(username, passwordUsername, passwordName)).Should().Be(null);
+
+        }
+        [Theory]
+        [InlineData("luca", "123f3g", "facebook", "24442")]
+        [InlineData("luca", "3ffrfr3g", "gmail", "8fgtgf")]
+        [InlineData("luca", "1111", "gmail", "8rfrfr")]
+
+        public async void Printing_Password_Allowed(string username, string passwordUsername, string passwordName, string password)
+        {
+            Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
+            mock.Setup(x => x.GetUtenteWithPassword(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
+            mock.Setup(x => x.Save()).ReturnsAsync(true);
+            IPasswordService passwordService = new PasswordService(mock.Object);
+            await passwordService.NewPassword(username, passwordUsername, passwordName, password);
+
+            (await passwordService.GetPassword(username, passwordUsername, passwordName)).Should().NotBe(null);
+
+        }
     }
 }
