@@ -1,6 +1,7 @@
 
 using FluentAssertions;
 using Moq;
+using PasswordGen.Data;
 using PasswordGen.Model;
 using PasswordGen.Repository;
 using PasswordGen.Service.PasswordService;
