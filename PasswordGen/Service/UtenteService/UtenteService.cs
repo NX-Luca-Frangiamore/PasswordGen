@@ -19,30 +19,19 @@ namespace PasswordGen.Service.UtenteService
         }
         public async Task<bool> ChangeUtente(string username, string password, string usernameNew, string passwordNew)
         {
-            if (await Db.GetUtente(username, password) is Utente u)
-            {
-                return await Db.Save() && u.ChangeCredenziali(usernameNew, passwordNew);
-            }
+            if ((await Db.GetUtente(username, password))?.ChangeCredenziali(usernameNew, passwordNew) is true)
+                 return await Db.Save();
             return false;
 
         }
 
         public async Task<bool> DeleteUtente(string username, string password)
         {
-            if (await Db.GetUtente(username, password) is not null)
-            {
-                
-                return await Db.Save() && await Db.DeleteUtente(username, password);
-            }
-            return false;
+            return (await Db.DeleteUtente(username, password)) && await Db.Save();
         }
         public async Task<Utente?> GetUtente(string username, string password)
         {
-            if (await Db.GetUtente(username, password) is Utente u)
-            {
-                return u;
-            }
-            return null;
+            return (await Db.GetUtente(username, password)) ??null;
         }
     }
 }

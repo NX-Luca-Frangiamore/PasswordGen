@@ -25,9 +25,7 @@ namespace PasswordGen.Model
         }
         public PasswordModel? GetPassword(string name)
         {
-            if (PasswordList.Where(x => x.Name == name).FirstOrDefault() is PasswordModel p)
-                return p;
-            return null;
+            return PasswordList.Where(x => x.Name == name).FirstOrDefault();
         }
         private Utente(string UsernameUtente, string PasswordUtente)
         {
