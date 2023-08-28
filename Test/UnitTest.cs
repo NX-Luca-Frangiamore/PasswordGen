@@ -10,24 +10,45 @@ namespace UnitTest
     public class UnitTest
     {
         [Theory]
-        [InlineData("", "12356")]
+        [InlineData("", "12")]
         [InlineData("peppe1", "")]
-        public void Creazione_Utente_NonAvvenuta(string username, string password)
+        public async void Creation_InvalidUser_NotAllowed(string username, string password)
         {
-            Utente.Create(username, password).Should().BeNull();
+            Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
+            mock.Setup(x => x.Save()).ReturnsAsync(true);
+            UtenteService utenteService = new UtenteService(mock.Object);
+            //Action
+            var r = await utenteService.NewUtente(username, password);
+            //Assert
+            r.Should().Be(false);
         }
         [Theory]
-        [InlineData("luca123", "12356","")]
-        [InlineData("peppe1", "333343","ff")]
-        public void Cambio_CredenzialiUtente_NonAvvenuto(string username, string password,string newPassword)
+        [InlineData("luca", "12356")]
+        [InlineData("peppe1", "fgf")]
+        public async void Creation_ValidUser_Allowed(string username, string password)
         {
+            Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
+            mock.Setup(x => x.NewUtente(It.IsAny<Utente>())).ReturnsAsync(true);
+            UtenteService utenteService = new UtenteService(mock.Object);
+            //Action
+            var r = await utenteService.NewUtente(username, password);
+            //Assert
+            r.Should().Be(true);
+        }
 
-            Utente? u=Utente.Create(username, password);
-
-            u.ChangeCredenziali("", newPassword);
-           
-            u.UsernameUtente.Should().Be(username);
-            u.PasswordUtente.Should().NotBe(newPassword);
+        [Theory]
+        [InlineData("", "12356",null,"fffr")]
+        [InlineData("peppe1", "333343","frfr","ff")]
+        public async void Changing_UserCredential_NotAllowed(string username, string passwordUsername,string newUsername,string newPassword)
+        {
+            Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
+            mock.Setup(x => x.GetUtente(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
+            mock.Setup(x => x.Save()).ReturnsAsync(true);
+            UtenteService utenteService = new UtenteService(mock.Object);
+            //Action
+            var r = await (utenteService.ChangeUtente(username, passwordUsername,newUsername,newPassword));
+            //Assert
+            r.Should().Be(false);
         }
         [Theory]
         [InlineData("gmail", "12")]

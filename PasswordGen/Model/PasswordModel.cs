@@ -12,7 +12,6 @@ namespace PasswordGen.Model
         public string Name { get; set; }
         public string Password { get; set; }
         public int UtenteId { get; set; }
-        public PasswordModel() { }//Per test
         private PasswordModel(string name, string password)
         {
             Name = name;

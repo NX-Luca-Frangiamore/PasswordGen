@@ -29,7 +29,6 @@ namespace PasswordGen.Model
                 return p;
             return null;
         }
-        public Utente() { }//Per test
         private Utente(string UsernameUtente, string PasswordUtente)
         {
                 this.UsernameUtente = UsernameUtente;
@@ -44,16 +43,18 @@ namespace PasswordGen.Model
             else
                 return null;
         }
-        public bool ChangeCredenziali(string username,string password)
+        public bool ChangeCredenziali(string? username,string? password)
         {
             bool Changed= false;
-            if (CredenzialiManger.VerificaUserName(username))
+            if (username is not null)
             {
+                if (!CredenzialiManger.VerificaUserName(username)) return false;
                 this.UsernameUtente = username;
                 Changed = true;
             }
-            if (CredenzialiManger.VerificaPassword(password))
+            if (password is not null)
             {
+                if (!CredenzialiManger.VerificaPassword(password)) return false;
                 this.PasswordUtente = password;
                 Changed = true;
             }

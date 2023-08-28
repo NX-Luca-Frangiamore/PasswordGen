@@ -21,9 +21,7 @@ namespace PasswordGen.Service.UtenteService
         {
             if (await Db.GetUtente(username, password) is Utente u)
             {
-                u.ChangeCredenziali(usernameNew, passwordNew);
-                return await Db.Save();
-
+                return await Db.Save() && u.ChangeCredenziali(usernameNew, passwordNew);
             }
             return false;
 
@@ -33,8 +31,8 @@ namespace PasswordGen.Service.UtenteService
         {
             if (await Db.GetUtente(username, password) is not null)
             {
-                await Db.DeleteUtente(username, password);
-                return await Db.Save();
+                
+                return await Db.Save() && await Db.DeleteUtente(username, password);
             }
             return false;
         }
