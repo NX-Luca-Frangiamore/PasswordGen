@@ -2,7 +2,7 @@
 using FluentAssertions;
 using PasswordGen.Model;
 
-namespace Test
+namespace UnitTest
 {
     public class UnitTest
     {

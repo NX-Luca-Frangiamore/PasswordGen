@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using PasswordGen;
 using PasswordGen.Data;
-using PasswordGen.Service.Logic.LogicPassword;
-using PasswordGen.Service.Logic.LogicUtente;
-using PasswordGen.Service.Db;
+using PasswordGen.Repository;
+using PasswordGen.Service.LogicPassword;
+using PasswordGen.Service.LogicUtente;
 
 var builder = WebApplication.CreateBuilder(args);
 

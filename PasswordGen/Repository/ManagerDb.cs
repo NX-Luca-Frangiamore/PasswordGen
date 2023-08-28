@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PasswordGen.Model;
 using PasswordGen.Data;
-namespace PasswordGen.Service.Db
+
+namespace PasswordGen.Repository
 {
     public class ManagerDb : IManagerDb
     {
@@ -15,8 +16,8 @@ namespace PasswordGen.Service.Db
         }
         public async override Task<bool> DeleteUtente(string username, string passwordUsername)
         {
-            if(await GetUtente(username, passwordUsername) is Utente u)
-              db.Utente.Remove(u);
+            if (await GetUtente(username, passwordUsername) is Utente u)
+                db.Utente.Remove(u);
             return await Save();
         }
         public override async Task<Utente?> GetUtente(string username, string passwordUsername)
@@ -25,11 +26,11 @@ namespace PasswordGen.Service.Db
         }
         public override async Task<Utente?> GetUtenteWithPassword(string username, string passwordUsername)
         {
-            return await db.Utente.Include(x=>x.PasswordList).Where(x => x.UsernameUtente == username && x.PasswordUtente == passwordUsername).FirstOrDefaultAsync();
+            return await db.Utente.Include(x => x.PasswordList).Where(x => x.UsernameUtente == username && x.PasswordUtente == passwordUsername).FirstOrDefaultAsync();
         }
         public override async Task<bool> Save()
         {
-            return (await db.SaveChangesAsync())>0;
+            return await db.SaveChangesAsync() > 0;
         }
     }
 }
