@@ -1,9 +1,8 @@
 ﻿using PasswordGen.Service;
 using PasswordGen;
 using System.Runtime.CompilerServices;
-using PasswordGen.Service.Db;
-using PasswordGen.Service.Logic.LogicUtente;
-using PasswordGen.Service.Logic.LogicPassword;
+using PasswordGen.Service.LogicUtente;
+using PasswordGen.Service.LogicPassword;
 
 namespace PasswordGen
 {

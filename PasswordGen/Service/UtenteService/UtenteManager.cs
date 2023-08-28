@@ -1,8 +1,7 @@
-﻿using PasswordGen.Service.Db;
-using PasswordGen.Model;
-using PasswordGen.Service.Logic.LogicUtente;
+﻿using PasswordGen.Model;
+using PasswordGen.Repository;
 
-namespace PasswordGen.Data
+namespace PasswordGen.Service.LogicUtente
 {
     public class UtenteManager : IUtenteManager
     {

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PasswordGen.Model;
-using PasswordGen.Service.Db;
 
-namespace PasswordGen.Service.Logic.LogicUtente
+namespace PasswordGen.Service.LogicUtente
 {
     public interface IUtenteManager
 
