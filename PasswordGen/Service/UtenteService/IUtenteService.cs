@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PasswordGen.Model;
 
-namespace PasswordGen.Service.LogicUtente
+namespace PasswordGen.Service.UtenteService
 {
-    public interface IUtenteManager
+    public interface IUtenteService
 
     {   
         abstract public Task<bool> NewUtente(string username, string password);

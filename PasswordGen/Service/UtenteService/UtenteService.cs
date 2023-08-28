@@ -1,12 +1,12 @@
 ﻿using PasswordGen.Model;
 using PasswordGen.Repository;
 
-namespace PasswordGen.Service.LogicUtente
+namespace PasswordGen.Service.UtenteService
 {
-    public class UtenteManager : IUtenteManager
+    public class UtenteService : IUtenteService
     {
         readonly IManagerDb Db;
-        public UtenteManager(IManagerDb db)
+        public UtenteService(IManagerDb db)
         {
             Db = db;
         }
@@ -21,9 +21,7 @@ namespace PasswordGen.Service.LogicUtente
         {
             if (await Db.GetUtente(username, password) is Utente u)
             {
-                u.ChangeCredenziali(usernameNew, passwordNew);
-                return await Db.Save();
-
+                return u.ChangeCredenziali(usernameNew, passwordNew) && await Db.Save();
             }
             return false;
 
@@ -33,8 +31,7 @@ namespace PasswordGen.Service.LogicUtente
         {
             if (await Db.GetUtente(username, password) is not null)
             {
-                await Db.DeleteUtente(username, password);
-                return await Db.Save();
+                return await( Db.DeleteUtente(username, password)) && await (Db.Save());
             }
             return false;
         }
