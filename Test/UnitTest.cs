@@ -54,15 +54,6 @@ namespace UnitTest
       
         }
         [Theory]
-        [InlineData("gmail", "12")]
-        [InlineData("", "333343")]
-        [InlineData("frfr", "3")]
-        [InlineData("frfr", "ffffffffffffffff3")]
-        public void Creazione_Password_NonAvvenuta(string username, string password)
-        {
-            PasswordModel.Create(username, password).Should().BeNull();
-        }
-        [Theory]
         [InlineData("", "123f3g", "gma4il", "24442")]
         [InlineData("luca", "3ffrfr3g", "gmail", "88")]
         [InlineData("luca", "88", "gmail", "22442")]
@@ -133,7 +124,7 @@ namespace UnitTest
         [InlineData("luca", "3ffrfr3g", "gmail", "8")]
         [InlineData("luca", "", "gmail", "8")]
 
-        public async void Printing_NoExistentPassword_NotAllowed(string username, string passwordUsername, string passwordName, string password)
+        public async void Getting_NoExistentPassword_NotAllowed(string username, string passwordUsername, string passwordName, string password)
         {
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
             mock.Setup(x => x.GetUtenteWithPassword(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
@@ -149,7 +140,7 @@ namespace UnitTest
         [InlineData("luca", "3ffrfr3g", "gmail", "8fgtgf")]
         [InlineData("luca", "1111", "gmail", "8rfrfr")]
 
-        public async void Printing_Password_Allowed(string username, string passwordUsername, string passwordName, string password)
+        public async void Getting_Password_Allowed(string username, string passwordUsername, string passwordName, string password)
         {
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
             mock.Setup(x => x.GetUtenteWithPassword(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
@@ -173,6 +164,24 @@ namespace UnitTest
             IUtenteService utenteService =new UtenteService(mock.Object);
 
             (await utenteService.NewUtente(username, password)).Should().Be(false);
+
+        }
+        [Theory]
+        [InlineData("peppe", "1gn2")]
+        [InlineData("luca", "333343")]
+
+        public async void Creation_DuplicatedPassword_NotAllowed(string passwordName, string password)
+        {
+            Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
+            mock.Setup(x => x.Save()).ReturnsAsync(true);
+            mock.Setup(x => x.GetUtenteWithPassword("luca", "test")).ReturnsAsync(Utente.Create("luca", "test"));
+            mock.Setup(x => x.NewUtente(It.IsAny<Utente>())).ReturnsAsync(true);
+            IPasswordService passwordService = new PasswordService(mock.Object);
+
+           (await passwordService.NewPassword("luca", "test", passwordName, password)).Should().Be(true); ;
+
+           (await passwordService.NewPassword("luca", "test", passwordName, password)).Should().Be(false);
+
 
         }
     }
