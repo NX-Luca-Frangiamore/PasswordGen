@@ -10,10 +10,12 @@ namespace PasswordGen.Service.UtenteService
         {
             Db = db;
         }
-        public async Task<bool> NewUtente(string nome, string cognome)
+        public async Task<bool> NewUtente(string username, string password)
         {
-            if (Utente.Create(nome, cognome) is Utente u)
-                return await Db.NewUtente(u);
+            if ((await Db.GetUtente(username, password)) is null)
+                if (Utente.Create(username, password) is Utente u)
+                    return await Db.NewUtente(u);
+
             return false;
 
         }
