@@ -10,11 +10,12 @@ namespace PasswordGen.Model
         public virtual List<PasswordModel> PasswordList { get; set; }=new List<PasswordModel>();
         public bool AddPassword(string name, string password)
         {
-            if (PasswordModel.Create(name, password) is PasswordModel p)
-            {
-                PasswordList.Add(p);
-                return true;
-            }
+            if(GetPassword(name) is null)
+                if (PasswordModel.Create(name, password) is PasswordModel p)
+                {
+                    PasswordList.Add(p);
+                    return true;
+                }
             return false;
         }
         public bool DeletePassword(string name)
