@@ -22,7 +22,7 @@ namespace PasswordGen.Repository
         }
         public override async Task<Utente?> GetUtente(string username, string passwordUsername)
         {
-            return await db.Utente.Where(x => x.UsernameUtente == username && x.PasswordUtente == passwordUsername).FirstOrDefaultAsync();
+            return await db.Utente.Where(x => (x.UsernameUtente == username && x.PasswordUtente == passwordUsername)).FirstOrDefaultAsync();
         }
         public override async Task<Utente?> GetUtenteWithPassword(string username, string passwordUsername)
         {

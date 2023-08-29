@@ -10,7 +10,7 @@ using PasswordGen.Data;
 namespace PasswordGen.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230825095901_InitialCreate")]
+    [Migration("20230828154905_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -42,7 +42,12 @@ namespace PasswordGen.Migrations
                 {
                     b.OwnsMany("PasswordGen.Model.PasswordModel", "PasswordList", b1 =>
                         {
+                            b1.Property<int>("id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER");
+
                             b1.Property<string>("Name")
+                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Password")
@@ -52,7 +57,7 @@ namespace PasswordGen.Migrations
                             b1.Property<int>("UtenteId")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("Name");
+                            b1.HasKey("id");
 
                             b1.HasIndex("UtenteId");
 

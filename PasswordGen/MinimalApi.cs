@@ -24,7 +24,7 @@ namespace PasswordGen
                 {
                     return TypedResults.Ok(await MangerU.ChangeUtente(username, password, usernameNew, passwordNew));
                 });
-                ApiUtente.MapPut("delete", async (string username, string password, IUtenteService MangerU) =>
+                ApiUtente.MapDelete("delete", async (string username, string password, IUtenteService MangerU) =>
                 {
                     return TypedResults.Ok(await MangerU.DeleteUtente(username, password));
                 });
@@ -48,12 +48,17 @@ namespace PasswordGen
 
                     return TypedResults.Ok(await ManagerP.GetPassword(username, passwordUtente));
                 });
-                ApiPassword.MapPut("change", async (string username, string passwordUtente, string namePassword, string password, IPasswordService ManagerP) =>
+                ApiPassword.MapPut("change", async (string username, string passwordUtente, string namePassword, string passwordNew, IPasswordService ManagerP) =>
                 {
 
-                    return TypedResults.Ok(await ManagerP.ChangePassword(username, passwordUtente, namePassword, password));
+                    return TypedResults.Ok(await ManagerP.ChangePassword(username, passwordUtente, namePassword, passwordNew));
                 });
-                return app;
+                ApiPassword.MapDelete("delete", async (string username, string passwordUtente, string namePassword, IPasswordService ManagerP) =>
+                {
+
+                    return TypedResults.Ok(await ManagerP.DeletePassword(username, passwordUtente, namePassword));
+                });
+            return app;
             }
     }
 }

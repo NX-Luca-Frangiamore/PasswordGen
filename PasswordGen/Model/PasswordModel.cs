@@ -3,12 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
 
 namespace PasswordGen.Model
-{
-
+{ 
     public class PasswordModel
-
     {
-
         public string Name { get; set; }
         public string Password { get; set; }
         public int UtenteId { get; set; }
@@ -32,6 +29,5 @@ namespace PasswordGen.Model
             }
             return false;
         }
-
     }
 }

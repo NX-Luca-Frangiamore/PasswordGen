@@ -10,12 +10,11 @@ namespace PasswordGen.Data
         public Context(DbContextOptions opt) : base(opt) { }
         public DbSet<Utente> Utente { get; set; }
         public DbSet<PasswordModel> PasswordList { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ConfUtente).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(Conf).Assembly);
 
         }
         //usare modelcreate o tipyconfigurator

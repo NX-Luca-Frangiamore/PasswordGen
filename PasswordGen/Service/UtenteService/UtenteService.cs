@@ -31,7 +31,7 @@ namespace PasswordGen.Service.UtenteService
         }
         public async Task<Utente?> GetUtente(string username, string password)
         {
-            return (await Db.GetUtente(username, password)) ??null;
+            return (await Db.GetUtente(username, password));
         }
     }
 }

@@ -39,7 +39,12 @@ namespace PasswordGen.Migrations
                 {
                     b.OwnsMany("PasswordGen.Model.PasswordModel", "PasswordList", b1 =>
                         {
+                            b1.Property<int>("id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER");
+
                             b1.Property<string>("Name")
+                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Password")
@@ -49,7 +54,7 @@ namespace PasswordGen.Migrations
                             b1.Property<int>("UtenteId")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("Name");
+                            b1.HasKey("id");
 
                             b1.HasIndex("UtenteId");
 

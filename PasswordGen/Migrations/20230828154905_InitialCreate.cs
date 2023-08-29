@@ -28,13 +28,15 @@ namespace PasswordGen.Migrations
                 name: "PasswordList",
                 columns: table => new
                 {
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     UtenteId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PasswordList", x => x.Name);
+                    table.PrimaryKey("PK_PasswordList", x => x.id);
                     table.ForeignKey(
                         name: "FK_PasswordList_Utente_UtenteId",
                         column: x => x.UtenteId,
