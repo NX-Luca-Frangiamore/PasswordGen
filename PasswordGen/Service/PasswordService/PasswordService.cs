@@ -37,7 +37,7 @@ namespace PasswordGen.Service.PasswordService
 
         public async Task<List<PasswordModel>?> GetPassword(string username, string passwordUtente)
         {
-            return (await Db.GetUtenteWithPassword(username, passwordUtente))?.PasswordList;
+            return (await Db.GetUtenteWithPassword(username, passwordUtente))?.PasswordList??null;
         }
 
         public async Task<bool> NewPassword(string username, string passwordUtente, string nomePassword, string password)
