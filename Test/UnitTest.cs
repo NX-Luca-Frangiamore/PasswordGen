@@ -18,6 +18,8 @@ namespace UnitTest
         {
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
             mock.Setup(x => x.Save()).ReturnsAsync(true);
+            mock.Setup(x => x.GetUtente(username, password)).ReturnsAsync(default(Utente));
+            mock.Setup(x => x.NewUtente(It.IsAny<Utente>())).ReturnsAsync(true);
             IUtenteService utenteService = new UtenteService(mock.Object);
         
             (await utenteService.NewUtente(username, password)).Should().Be(false);
@@ -29,6 +31,8 @@ namespace UnitTest
         public async void Creation_ValidUser_Allowed(string username, string password)
         {
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
+            mock.Setup(x => x.Save()).ReturnsAsync(true);
+            mock.Setup(x => x.GetUtente(username,password)).ReturnsAsync(default(Utente));
             mock.Setup(x => x.NewUtente(It.IsAny<Utente>())).ReturnsAsync(true);
             IUtenteService utenteService = new UtenteService(mock.Object);
        
@@ -54,9 +58,9 @@ namespace UnitTest
         [InlineData("", "333343")]
         [InlineData("frfr", "3")]
         [InlineData("frfr", "ffffffffffffffff3")]
-        public void Creazione_Password_NonAvvenuta(string name, string password)
+        public void Creazione_Password_NonAvvenuta(string username, string password)
         {
-            PasswordModel.Create(name, password).Should().BeNull();
+            PasswordModel.Create(username, password).Should().BeNull();
         }
         [Theory]
         [InlineData("", "123f3g", "gma4il", "24442")]
@@ -154,6 +158,21 @@ namespace UnitTest
             await passwordService.NewPassword(username, passwordUsername, passwordName, password);
 
             (await passwordService.GetPassword(username, passwordUsername, passwordName)).Should().NotBe(null);
+
+        }
+        [Theory]
+        [InlineData("peppe", "1g2")]
+        [InlineData("luca", "333343")]
+       
+        public async void Creation_DuplicatedUser_NotAllowed(string username, string password)
+        {
+            Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
+            mock.Setup(x => x.Save()).ReturnsAsync(true);
+            mock.Setup(x => x.GetUtente(username, password)).ReturnsAsync(Utente.Create(username,password));
+            mock.Setup(x => x.NewUtente(It.IsAny<Utente>())).ReturnsAsync(true);
+            IUtenteService utenteService =new UtenteService(mock.Object);
+
+            (await utenteService.NewUtente(username, password)).Should().Be(false);
 
         }
     }
