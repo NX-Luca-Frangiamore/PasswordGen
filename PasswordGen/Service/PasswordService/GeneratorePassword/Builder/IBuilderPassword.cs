@@ -14,20 +14,10 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder
 
     public class IBuilderPassword
     {
-        protected static PasswordModel? Password;
-        protected IBuilderPassword() { }
-        public static IBuilderPassword? Initialization(string name)
+        protected static string Password="";
+        public string? Done()
         {
-            if (PasswordModel.CreateNew(name) is PasswordModel password)
-            {
-                Password = password;
-                return new();
-            }
-            return default;   
-        }
-        public PasswordModel? Done()
-        {
-            return Password.CompleteCreation();
+            return Password;
         }
         public IBuilderPassword AddGenerazioneMauCaratteriCasuali(int m)
         {

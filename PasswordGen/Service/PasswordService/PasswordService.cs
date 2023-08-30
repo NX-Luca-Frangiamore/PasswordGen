@@ -51,10 +51,8 @@ namespace PasswordGen.Service.PasswordService
 
         public async Task<string?> NewPassword(string username, string passwordUtente, string namePassword, FactoryBuilder.TypePassword type)
         {
-            PasswordModel? password= FactoryBuilder.Get(type, namePassword);
-            if ((await Db.GetUtenteWithPassword(username, passwordUtente)) is Utente u)
-                if(u.AddPassword(password) && await Db.Save())
-                    return password?.Password;
+            if(FactoryBuilder.Get(type) is string password)
+               return (await NewPassword(username, passwordUtente, namePassword, password)) ? password : null;
             return null;
         }
     }

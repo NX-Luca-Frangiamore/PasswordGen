@@ -31,9 +31,8 @@ namespace PasswordGen.Migrations
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    UtenteId = table.Column<int>(type: "INTEGER", nullable: false),
-                    state = table.Column<int>(type: "INTEGER", nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: true)
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    UtenteId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

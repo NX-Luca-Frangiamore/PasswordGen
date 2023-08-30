@@ -10,7 +10,7 @@ using PasswordGen.Data;
 namespace PasswordGen.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230830132422_InitialCreate")]
+    [Migration("20230830141554_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -51,12 +51,10 @@ namespace PasswordGen.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Password")
+                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("UtenteId")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<int>("state")
                                 .HasColumnType("INTEGER");
 
                             b1.HasKey("id");

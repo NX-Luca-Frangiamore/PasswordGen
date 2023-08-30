@@ -1,9 +1,8 @@
 ﻿using PasswordGen.Service.UtenteService;
 using PasswordGen.Service.PasswordService;
 using PasswordGen.Model;
-using PasswordGen.Service.PasswordService.GeneratorePassword.Builder;
-using PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory;
-using System.Reflection.Emit;
+using PasswordGen.Service.PasswordService.GeneratorePassword;
+using static PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory.FactoryBuilder;
 
 namespace PasswordGen
 {
@@ -39,13 +38,12 @@ namespace PasswordGen
                            : Results.BadRequest("utente non cancellato");
                 });
                 return app;
-                }
-                public static WebApplication AddEndPointPassword(this WebApplication app)
-                {
+            }
+            public static WebApplication AddEndPointPassword(this WebApplication app)
+            {
 
-                    var ApiPassword = app.MapGroup("api/password");
+                var ApiPassword = app.MapGroup("api/password");
           
-                
                 ApiPassword.MapPost("new", async (string username, string passwordUtente, string namePassword, string password, IPasswordService ManagerP) =>
                 {
 
@@ -53,14 +51,13 @@ namespace PasswordGen
                            ? Results.Ok("password creata")
                            : Results.BadRequest("password non creata");
                 });
-                ApiPassword.MapPost("new/{typeBuilder}", async (string username, string passwordUtente, string namePassword, FactoryBuilder.TypePassword typeBuilder, IPasswordService ManagerP) =>
-                {
-                    // FactoryBuilder.Get(typeBuilder, namePassword);
-                  
-                    return await ManagerP.NewPassword(username, passwordUtente, namePassword,typeBuilder) is string password
-                           ? Results.Ok("password:"+password)
-                           : Results.BadRequest("password non creata");
-                });
+            ApiPassword.MapPost("new/{type}", async (string username, string passwordUtente, string namePassword,TypePassword type, IPasswordService ManagerP) =>
+            {
+
+                return await ManagerP.NewPassword(username, passwordUtente, namePassword, type) is string s
+                       ? Results.Ok("password creata:"+s)
+                       : Results.BadRequest("password non creata");
+            });
             ApiPassword.MapGet("get", async (string username, string passwordUtente, string namePassword, IPasswordService ManagerP) =>
                 {
 

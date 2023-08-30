@@ -8,7 +8,7 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Tipi
         public NumeriCasuali(int m)
         {
             for (int i = 0; i < m; i++)
-                Password.AddPart(new Random().Next(10).ToString() + "");
+                Password+=(new Random().Next(10).ToString() + "");
         }
 
     }

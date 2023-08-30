@@ -14,7 +14,7 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Tipi
         protected void Generate(int m, int initRange, int endRange)
         {
             for (int i = 0; i < m; i++)
-                Password.AddPart((char)Random.Next(initRange, endRange) + "");
+                Password+=((char)Random.Next(initRange, endRange) + "");
         }
     }
 }

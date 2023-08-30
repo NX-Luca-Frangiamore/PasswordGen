@@ -1,4 +1,6 @@
-﻿namespace PasswordGen.Model
+﻿using System.Runtime.InteropServices;
+
+namespace PasswordGen.Model
 {
     public class Utente
     {
@@ -9,21 +11,11 @@
         public bool AddPassword(string name, string password)
         {
             if(GetPassword(name) is null)
-                if (PasswordModel.CreateNew(name, password) is PasswordModel p)
+                if (PasswordModel.Create(name, password) is PasswordModel p)
                 {
                     PasswordList.Add(p);
                     return true;
                 }
-            return false;
-        }
-        public bool AddPassword(PasswordModel? password)
-        {
-            if (password is null) return false;
-            if (GetPassword(password.Name) is null)
-            {
-                PasswordList.Add(password);
-                return true;
-            }
             return false;
         }
         public bool DeletePassword(string name)
