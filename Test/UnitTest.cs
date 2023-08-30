@@ -64,7 +64,7 @@ namespace UnitTest
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
             mock.Setup(x => x.GetUtenteWithPassword(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
             mock.Setup(x => x.Save()).ReturnsAsync(true);
-            IPasswordService passwordService = new PasswordService(mock.Object);
+            IPasswordService passwordService = new PasswordService(mock.Object,null);
             
             (await passwordService.NewPassword(username, passwordUsername, passwordName, password)).Should().Be(false); 
  
@@ -79,7 +79,7 @@ namespace UnitTest
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
             mock.Setup(x => x.GetUtenteWithPassword(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
             mock.Setup(x => x.Save()).ReturnsAsync(true);
-            IPasswordService passwordService = new PasswordService(mock.Object);
+            IPasswordService passwordService = new PasswordService(mock.Object,null);
 
             (await passwordService.NewPassword(username, passwordUsername, passwordName, password)).Should().Be(true); 
 
@@ -98,7 +98,7 @@ namespace UnitTest
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
             mock.Setup(x => x.GetUtenteWithPassword(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
             mock.Setup(x => x.Save()).ReturnsAsync(true);
-            IPasswordService passwordService = new PasswordService(mock.Object);
+            IPasswordService passwordService = new PasswordService(mock.Object,null);
             await passwordService.NewPassword(username, passwordUsername, passwordName, password);
 
             (await passwordService.DeletePassword(username, passwordUsername, passwordName)).Should().Be(false);
@@ -113,7 +113,7 @@ namespace UnitTest
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
             mock.Setup(x => x.GetUtenteWithPassword(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
             mock.Setup(x => x.Save()).ReturnsAsync(true);
-            IPasswordService passwordService = new PasswordService(mock.Object);
+            IPasswordService passwordService = new PasswordService(mock.Object,null);
             await passwordService.NewPassword(username, passwordUsername, passwordName, password);
 
             (await passwordService.DeletePassword(username, passwordUsername, passwordName)).Should().Be(true);
@@ -129,7 +129,7 @@ namespace UnitTest
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
             mock.Setup(x => x.GetUtenteWithPassword(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
             mock.Setup(x => x.Save()).ReturnsAsync(true);
-            IPasswordService passwordService = new PasswordService(mock.Object);
+            IPasswordService passwordService = new PasswordService(mock.Object,null);
             await passwordService.NewPassword(username, passwordUsername, passwordName, password);
 
             (await passwordService.GetPassword(username, passwordUsername, passwordName)).Should().Be(null);
@@ -145,7 +145,7 @@ namespace UnitTest
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
             mock.Setup(x => x.GetUtenteWithPassword(username, passwordUsername)).ReturnsAsync(Utente.Create(username, passwordUsername));
             mock.Setup(x => x.Save()).ReturnsAsync(true);
-            IPasswordService passwordService = new PasswordService(mock.Object);
+            IPasswordService passwordService = new PasswordService(mock.Object,null);
             await passwordService.NewPassword(username, passwordUsername, passwordName, password);
 
             (await passwordService.GetPassword(username, passwordUsername, passwordName)).Should().NotBe(null);
@@ -176,7 +176,7 @@ namespace UnitTest
             mock.Setup(x => x.Save()).ReturnsAsync(true);
             mock.Setup(x => x.GetUtenteWithPassword("luca", "test")).ReturnsAsync(Utente.Create("luca", "test"));
             mock.Setup(x => x.NewUtente(It.IsAny<Utente>())).ReturnsAsync(true);
-            IPasswordService passwordService = new PasswordService(mock.Object);
+            IPasswordService passwordService = new PasswordService(mock.Object,null);
 
            (await passwordService.NewPassword("luca", "test", passwordName, password)).Should().Be(true); ;
 
