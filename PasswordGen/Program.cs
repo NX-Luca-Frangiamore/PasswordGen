@@ -5,6 +5,7 @@ using PasswordGen.Model;
 using PasswordGen.Repository;
 using PasswordGen.Service.PasswordService;
 using PasswordGen.Service.PasswordService.GeneratorePassword;
+using PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory;
 using PasswordGen.Service.UtenteService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSqlite<Context>("Data Source=Context.db");//il db si chiama context
 builder.Services.AddDbContext<Context>(options => options.UseLazyLoadingProxies().UseSqlite(builder.Configuration.GetConnectionString("Context")));
 builder.Services.AddScoped<IManagerDb, ManagerDb>();
+builder.Services.AddSingleton<FactoryBuilder>();
 builder.Services.AddScoped<IUtenteService, UtenteService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddControllers();

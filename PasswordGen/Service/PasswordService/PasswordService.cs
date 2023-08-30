@@ -8,9 +8,11 @@ namespace PasswordGen.Service.PasswordService
     public class PasswordService : IPasswordService
     {
         readonly IManagerDb Db;
-        public PasswordService(IManagerDb db)
+        FactoryBuilder? Factory;
+        public PasswordService(IManagerDb db, FactoryBuilder? factory)
         {
             Db = db;
+            Factory = factory;
         }
 
         public async Task<bool> ChangePassword(string username, string passwordUtente, string nomePassword, string newPassword)
@@ -51,7 +53,7 @@ namespace PasswordGen.Service.PasswordService
 
         public async Task<string?> NewPassword(string username, string passwordUtente, string namePassword, FactoryBuilder.TypePassword type)
         {
-            if(FactoryBuilder.Get(type) is string password)
+            if(Factory?.Get(type) is string password)
                return (await NewPassword(username, passwordUtente, namePassword, password)) ? password : null;
             return null;
         }
