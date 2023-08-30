@@ -1,5 +1,7 @@
 ﻿using PasswordGen.Model;
 using PasswordGen.Repository;
+using PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory;
+using System.Reflection.Metadata.Ecma335;
 
 namespace PasswordGen.Service.PasswordService
 {
@@ -45,6 +47,15 @@ namespace PasswordGen.Service.PasswordService
             if((await Db.GetUtenteWithPassword(username, passwordUtente))?.AddPassword(nomePassword, password) is true)
                      return await Db.Save();
             return false;
+        }
+
+        public async Task<string?> NewPassword(string username, string passwordUtente, string namePassword, FactoryBuilder.TypePassword type)
+        {
+            PasswordModel? password= FactoryBuilder.Get(type, namePassword);
+            if ((await Db.GetUtenteWithPassword(username, passwordUtente)) is Utente u)
+                if(u.AddPassword(password) && await Db.Save())
+                    return password?.Password;
+            return null;
         }
     }
 }

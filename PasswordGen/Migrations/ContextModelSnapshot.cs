@@ -48,10 +48,12 @@ namespace PasswordGen.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Password")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("UtenteId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("state")
                                 .HasColumnType("INTEGER");
 
                             b1.HasKey("id");
