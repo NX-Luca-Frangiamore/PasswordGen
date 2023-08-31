@@ -9,7 +9,7 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory
 
     public class FactoryBuilder
     {
-        private Dictionary<TypePassword,BuilderPassword> Builder=new();
+        private Dictionary<TypePassword, IBuilderPassword> Builder=new();
         public enum TypePassword
         {
             soft,medium,hard
@@ -24,24 +24,24 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory
         {
             return Builder[type].Done();
         }
-        private BuilderPassword GetBuilderSoft()
+        private IBuilderPassword GetBuilderSoft()
         {
-            BuilderPassword p =new BuilderPassword()  
+            IBuilderPassword p =new BuilderPassword()  
                                                       .AddGenerazioneMauCaratteriCasuali(3)
                                                       .AddGenerazioneMinCaratteriCasuali(7);
             return p;
         }
-        private BuilderPassword GetBuilderMedium()
+        private IBuilderPassword GetBuilderMedium()
         {
-            BuilderPassword p = new BuilderPassword() 
+            IBuilderPassword p = new BuilderPassword() 
                                                       .AddGenerazioneMauCaratteriCasuali(3)
                                                       .AddGenerazioneMNumeriCasuali(2)
                                                       .AddGenerazioneMinCaratteriCasuali(5);
             return p;
         }
-        private BuilderPassword GetBuilderHard()
+        private IBuilderPassword GetBuilderHard()
         {
-            BuilderPassword p = new BuilderPassword() 
+            IBuilderPassword p = new BuilderPassword() 
                                                       .AddGenerazioneMauCaratteriCasuali (3)
                                                       .AddGenerazioneMNumeriCasuali(2)
                                                       .AddGenerazioneMinCaratteriCasuali(3)

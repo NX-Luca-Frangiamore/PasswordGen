@@ -12,7 +12,7 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder
 {
 
 
-    public class BuilderPassword
+    public class BuilderPassword : IBuilderPassword
     {
         private List<IElementiCasuali> Components;
         
@@ -27,24 +27,24 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder
         {
             Components=new List<IElementiCasuali>();
         }
-        public BuilderPassword AddGenerazioneMauCaratteriCasuali(int m)
+        public IBuilderPassword AddGenerazioneMauCaratteriCasuali(int m)
         {
             Components.Add(new CaratteriCasualiMau(m));
             return this;
         }
-        public BuilderPassword AddGenerazioneMinCaratteriCasuali(int m)
+        public IBuilderPassword AddGenerazioneMinCaratteriCasuali(int m)
         {
             Components.Add(new CaratteriCasualiMin(m));
             return this;
         }
 
-        public BuilderPassword AddGenerazioneMCaratteriSpecialiCasuali(int m)
+        public IBuilderPassword AddGenerazioneMCaratteriSpecialiCasuali(int m)
         {
             Components.Add(new CaratteriSpecialiCasuali(m));
             return this;
         }
 
-        public BuilderPassword AddGenerazioneMNumeriCasuali(int m)
+        public IBuilderPassword AddGenerazioneMNumeriCasuali(int m)
         {
             Components.Add(new NumeriCasuali(m));
             return this;
