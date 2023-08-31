@@ -1,4 +1,5 @@
 ﻿using PasswordGen.Model;
+using PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Tipi;
 using System.Data.Common;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata.Ecma335;
@@ -8,7 +9,7 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory
 
     public class FactoryBuilder
     {
-        private Dictionary<TypePassword,IBuilderPassword> Builder=new();
+        private Dictionary<TypePassword,BuilderPassword> Builder=new();
         public enum TypePassword
         {
             soft,medium,hard
@@ -23,28 +24,25 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory
         {
             return Builder[type].Done();
         }
-        private IBuilderPassword GetBuilderSoft()
+        private BuilderPassword GetBuilderSoft()
         {
-            BuilderPassword p = BuilderPassword.Create()
-                                                        .AddGenerazioneMauCaratteriCasuali(3)
-                                                        .AddGenerazioneMinCaratteriCasuali(7).Root;
+            BuilderPassword p =new CaratteriCasualiMau(3)
+                                                      .AddGenerazioneMinCaratteriCasuali(7).Root;
             return p;
         }
-        private IBuilderPassword GetBuilderMedium()
+        private BuilderPassword GetBuilderMedium()
         {
-            IBuilderPassword p = BuilderPassword.Create()
-                                                       .AddGenerazioneMauCaratteriCasuali(3)
-                                                       .AddGenerazioneMNumeriCasuali(2)
-                                                       .AddGenerazioneMinCaratteriCasuali(5).Root;
+            BuilderPassword p = new CaratteriCasualiMau(3)
+                                                      .AddGenerazioneMNumeriCasuali(2)
+                                                      .AddGenerazioneMinCaratteriCasuali(5).Root;
             return p;
         }
-        private IBuilderPassword GetBuilderHard()
+        private BuilderPassword GetBuilderHard()
         {
-            IBuilderPassword p = BuilderPassword.Create()
-                                                       .AddGenerazioneMauCaratteriCasuali(3)
-                                                       .AddGenerazioneMNumeriCasuali(2)
-                                                       .AddGenerazioneMinCaratteriCasuali(3)
-                                                       .AddGenerazioneMCaratteriSpecialiCasuali(2).Root;
+            BuilderPassword p = new CaratteriCasualiMau(3)
+                                                      .AddGenerazioneMNumeriCasuali(2)
+                                                      .AddGenerazioneMinCaratteriCasuali(3)
+                                                      .AddGenerazioneMCaratteriSpecialiCasuali(2).Root;
             return p;
         }
     }

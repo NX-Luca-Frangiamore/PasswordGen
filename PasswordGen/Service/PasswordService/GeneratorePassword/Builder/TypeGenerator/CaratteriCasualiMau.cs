@@ -3,17 +3,10 @@ using System.Runtime.Serialization;
 
 namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Tipi
 {
-    internal class CaratteriCasualiMau :  BuilderPassword
+    internal class CaratteriCasualiMau :  IElementiCasuali
     {
-     
-        public CaratteriCasualiMau(int m, BuilderPassword c) :base(c)
-        {
-            this.mCharacter = m;          
-        }
-
-        public override string? Generate()
-        {            
-            return Generate(mCharacter, 65, 90);
-        }
+       
+        public CaratteriCasualiMau(int m, BuilderPassword root) :base(root, 65, 90,m){}
+        public CaratteriCasualiMau(int m) : base(65, 90, m) { }
     }
 }

@@ -3,15 +3,10 @@ using System.Runtime.Serialization;
 
 namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Tipi
 {
-    internal class CaratteriCasualiMin : BuilderPassword
+    internal class CaratteriCasualiMin : IElementiCasuali
     {
-        public CaratteriCasualiMin(int m, BuilderPassword c) : base(c)
-        {
-            mCharacter = m;
-        }
-        public override string? Generate()
-        {
-            return Generate(mCharacter, 97, 122);
-        }
+
+        public CaratteriCasualiMin(int m, BuilderPassword root) : base(root, 97, 122, m) { }
+        public CaratteriCasualiMin(int m) : base(97, 122, m) { }
     }
 }

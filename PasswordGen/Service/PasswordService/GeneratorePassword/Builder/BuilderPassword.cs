@@ -12,32 +12,25 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder
 {
 
 
-    public class BuilderPassword:IBuilderPassword
+    public abstract class BuilderPassword
     {
-        private Random Random = new Random();
         private BuilderPassword? component;
         public BuilderPassword Root;
-        protected int mCharacter;
-        protected string Generate(int m, int initRange, int endRange)
-        {
-            string password = "";
-            for (int i = 0; i < m; i++)
-                password += ((char)Random.Next(initRange, endRange) + "");
-            return password;
-        }
+        
         public string? Done()
         {
-            return (component?.Generate()+component?.Done())??"";
+            return (Generate()+component?.Done())??"";
         }
-        protected BuilderPassword(BuilderPassword? root)
+        public BuilderPassword(BuilderPassword root)
         {
-            Root = root??this;//set root
+            Root = root;
         }
-        public static BuilderPassword Create()
+
+        public BuilderPassword()//Utilizzato per inizializzare la catena di IBuilder
         {
-            return new BuilderPassword(null);//prima creazione
+            Root = this;
         }
-        public virtual string? Generate() { return ""; }
+        public abstract string? Generate();
         public BuilderPassword AddGenerazioneMauCaratteriCasuali(int m)
         {
             component = new CaratteriCasualiMau(m,Root);
