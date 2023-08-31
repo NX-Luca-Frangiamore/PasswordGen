@@ -6,7 +6,10 @@ using PasswordGen.Data;
 using PasswordGen.Model;
 using PasswordGen.Repository;
 using PasswordGen.Service.PasswordService;
+using PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory;
 using PasswordGen.Service.UtenteService;
+using static PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory.FactoryBuilder;
+
 namespace UnitTest
 {
     public class UnitTest
@@ -181,7 +184,34 @@ namespace UnitTest
            (await passwordService.NewPassword("luca", "test", passwordName, password)).Should().Be(true); ;
 
            (await passwordService.NewPassword("luca", "test", passwordName, password)).Should().Be(false);
+        }
+        [Theory]
+        [InlineData("facebook",TypePassword.soft)]
+        [InlineData("whatapp", TypePassword.medium)]
+        [InlineData("whatapp", TypePassword.hard)]
+        public async void Creation_RandomPassword_Allowed(string passwordName, TypePassword type)
+        {
+            Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
+            mock.Setup(x => x.Save()).ReturnsAsync(true);
+            mock.Setup(x => x.GetUtenteWithPassword("luca", "test")).ReturnsAsync(Utente.Create("luca", "test"));
+            mock.Setup(x => x.NewUtente(It.IsAny<Utente>())).ReturnsAsync(true);
+            IPasswordService passwordService = new PasswordService(mock.Object, new FactoryBuilder());
 
+            (await passwordService.NewPassword("luca","test",passwordName,type)).Should().NotBe(null);
+            
+        }
+        [Theory]
+        [InlineData("", TypePassword.soft)]
+        [InlineData(null, TypePassword.soft)]
+        public async void Creation_RandomPassword_NotAllowed(string passwordName, TypePassword type)
+        {
+            Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
+            mock.Setup(x => x.Save()).ReturnsAsync(true);
+            mock.Setup(x => x.GetUtenteWithPassword("luca", "test")).ReturnsAsync(Utente.Create("luca", "test"));
+            mock.Setup(x => x.NewUtente(It.IsAny<Utente>())).ReturnsAsync(true);
+            IPasswordService passwordService = new PasswordService(mock.Object, new FactoryBuilder());
+
+            (await passwordService.NewPassword("luca", "test", passwordName, type)).Should().Be(null);
 
         }
     }
