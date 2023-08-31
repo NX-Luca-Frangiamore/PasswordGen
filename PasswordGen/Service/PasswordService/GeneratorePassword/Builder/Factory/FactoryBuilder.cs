@@ -26,23 +26,26 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory
         }
         private BuilderPassword GetBuilderSoft()
         {
-            BuilderPassword p =new CaratteriCasualiMau(3)
-                                                      .AddGenerazioneMinCaratteriCasuali(7).Root;
+            BuilderPassword p =new BuilderPassword()  
+                                                      .AddGenerazioneMauCaratteriCasuali(3)
+                                                      .AddGenerazioneMinCaratteriCasuali(7);
             return p;
         }
         private BuilderPassword GetBuilderMedium()
         {
-            BuilderPassword p = new CaratteriCasualiMau(3)
+            BuilderPassword p = new BuilderPassword() 
+                                                      .AddGenerazioneMauCaratteriCasuali(3)
                                                       .AddGenerazioneMNumeriCasuali(2)
-                                                      .AddGenerazioneMinCaratteriCasuali(5).Root;
+                                                      .AddGenerazioneMinCaratteriCasuali(5);
             return p;
         }
         private BuilderPassword GetBuilderHard()
         {
-            BuilderPassword p = new CaratteriCasualiMau(3)
+            BuilderPassword p = new BuilderPassword() 
+                                                      .AddGenerazioneMauCaratteriCasuali (3)
                                                       .AddGenerazioneMNumeriCasuali(2)
                                                       .AddGenerazioneMinCaratteriCasuali(3)
-                                                      .AddGenerazioneMCaratteriSpecialiCasuali(2).Root;
+                                                      .AddGenerazioneMCaratteriSpecialiCasuali(2);
             return p;
         }
     }

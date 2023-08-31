@@ -12,46 +12,42 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder
 {
 
 
-    public abstract class BuilderPassword
+    public class BuilderPassword
     {
-        private BuilderPassword? component;
-        public BuilderPassword Root;
+        private List<IElementiCasuali> Components;
         
-        public string? Done()
+        public string Done()
         {
-            return (Generate()+component?.Done())??"";
+            string s = "";
+            foreach(IElementiCasuali component in Components)
+                s += component.Generate();
+            return s;
         }
-        public BuilderPassword(BuilderPassword root)
+        public BuilderPassword()
         {
-            Root = root;
+            Components=new List<IElementiCasuali>();
         }
-
-        public BuilderPassword()//Utilizzato per inizializzare la catena di IBuilder
-        {
-            Root = this;
-        }
-        public abstract string? Generate();
         public BuilderPassword AddGenerazioneMauCaratteriCasuali(int m)
         {
-            component = new CaratteriCasualiMau(m,Root);
-            return component;
+            Components.Add(new CaratteriCasualiMau(m));
+            return this;
         }
         public BuilderPassword AddGenerazioneMinCaratteriCasuali(int m)
         {
-            component=new CaratteriCasualiMin(m, Root);
-            return component;
+            Components.Add(new CaratteriCasualiMin(m));
+            return this;
         }
 
         public BuilderPassword AddGenerazioneMCaratteriSpecialiCasuali(int m)
         {
-            component=new CaratteriSpecialiCasuali(m, Root);
-            return component;
+            Components.Add(new CaratteriSpecialiCasuali(m));
+            return this;
         }
 
         public BuilderPassword AddGenerazioneMNumeriCasuali(int m)
         {
-            component=new NumeriCasuali(m, Root);
-            return component;
+            Components.Add(new NumeriCasuali(m));
+            return this;
         }
     }
 }
