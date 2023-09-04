@@ -29,7 +29,7 @@ namespace PasswordGen.Service.UtenteService
 
         public async Task<bool> DeleteUtente(string username, string password)
         {
-            return (await Db.DeleteUtente(username, password)) && await Db.Save();
+            return (await Db.DeleteUtente(username, password));
         }
         public async Task<Utente?> GetUtente(string username, string password)
         {
