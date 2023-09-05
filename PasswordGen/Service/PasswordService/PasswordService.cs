@@ -15,8 +15,9 @@ namespace PasswordGen.Service.PasswordService
             Factory = factory;
         }
 
-        public async Task<bool> ChangePassword(string username, string passwordUtente, string nomePassword, string newPassword)
+        public async Task<bool> ChangePassword(string? username, string? passwordUtente, string nomePassword, string newPassword)
         {
+            if(username is null || passwordUtente is null)return false;
             if (await Db.GetUtenteWithPassword(username, passwordUtente) is Utente u)
             {
                 if (u.GetPassword(nomePassword)?.SetPassword(newPassword)??false)
@@ -27,33 +28,38 @@ namespace PasswordGen.Service.PasswordService
             return false;
         }
 
-        public async Task<bool> DeletePassword(string username, string passwordUtente, string nomePassword)
+        public async Task<bool> DeletePassword(string? username, string? passwordUtente, string nomePassword)
         {
-            if((await Db.GetUtenteWithPassword(username, passwordUtente))?.DeletePassword(nomePassword) is true)
+            if (username is null || passwordUtente is null) return false;
+            if ((await Db.GetUtenteWithPassword(username, passwordUtente))?.DeletePassword(nomePassword) is true)
                 return await Db.Save();
             return false;
         }
 
-        public async Task<PasswordModel?> GetPassword(string username, string passwordUtente, string nomePassword)
+        public async Task<PasswordModel?> GetPassword(string? username, string? passwordUtente, string nomePassword)
         {
+            if (username is null || passwordUtente is null) return null;
             return (await Db.GetUtenteWithPassword(username, passwordUtente))?.GetPassword(nomePassword);
         }
 
-        public async Task<List<PasswordModel>?> GetPassword(string username, string passwordUtente)
+        public async Task<List<PasswordModel>?> GetPassword(string? username, string? passwordUtente)
         {
+            if (username is null || passwordUtente is null) return null;
             return (await Db.GetUtenteWithPassword(username, passwordUtente))?.PasswordList??null;
         }
 
-        public async Task<bool> NewPassword(string username, string passwordUtente, string nomePassword, string password)
+        public async Task<bool> NewPassword(string? username, string? passwordUtente, string nomePassword, string password)
         {
-            if((await Db.GetUtenteWithPassword(username, passwordUtente))?.AddPassword(nomePassword, password) is true)
+            if (username is null || passwordUtente is null) return false;
+            if ((await Db.GetUtenteWithPassword(username, passwordUtente))?.AddPassword(nomePassword, password) is true)
                      return await Db.Save();
             return false;
         }
 
-        public async Task<string?> NewPassword(string username, string passwordUtente, string namePassword, FactoryBuilder.TypePassword type)
+        public async Task<string?> NewPassword(string? username, string? passwordUtente, string namePassword, FactoryBuilder.TypePassword type)
         {
-            if(Factory?.Get(type) is string password)
+            if (username is null || passwordUtente is null) return null;
+            if (Factory?.Get(type) is string password)
                return (await NewPassword(username, passwordUtente, namePassword, password)) ? password : null;
             return null;
         }
