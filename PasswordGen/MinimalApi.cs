@@ -28,8 +28,14 @@ namespace PasswordGen
                         : Results.NotFound();
 
             });
+            app.MapPost("api/utente/new", async (string username, string password, IUtenteService MangerU, IStringLocalizer<Program> localizer) =>
+            {
+                return await MangerU.NewUtente(username, password) is true
+                       ? Results.Ok(localizer["userCreated"].Value)
+                       : Results.BadRequest(localizer["userNotCreated"].Value);
 
-            var ApiUtente = app.MapGroup("api/utente");
+            });
+            var ApiUtente = app.MapGroup("api/utente").RequireAuthorization("user"); ;
 
             ApiUtente.MapPost("new", async (string username, string password, IUtenteService MangerU, IStringLocalizer<Program> localizer) =>
             {
@@ -43,27 +49,27 @@ namespace PasswordGen
                 return await MangerU.GetUtente(claims.Get("username"), claims.Get("password")) is Utente u
                        ? Results.Ok(u)
                        : Results.NotFound(localizerus["userNotFound"].Value);
-            }).RequireAuthorization("user");
+            });
 
             ApiUtente.MapPut("change", async (ClaimsPrincipal claims, string? usernameNew, string? passwordNew, IUtenteService MangerU, IStringLocalizer<Program> localizerus) =>
                 {
                     return await MangerU.ChangeUtente(claims.Get("username"), claims.Get("password"), usernameNew, passwordNew) is true
                            ? Results.Ok(localizerus["credentialChanged"].Value)
                            : Results.Problem(localizerus["credentialNotChanged"].Value);
-                }).RequireAuthorization("user");
+                });
             ApiUtente.MapDelete("delete", async (ClaimsPrincipal claims, IUtenteService MangerU, IStringLocalizer<Program> localizerus) =>
                 {
                     return await MangerU.DeleteUtente(claims.Get("username"), claims.Get("password")) is true
                            ? Results.Ok(localizerus["userDeleted"].Value)
                            : Results.BadRequest(localizerus["userNotDeleted"].Value);
-                }).RequireAuthorization("user");
+                });
             return app;
         }
 
         public static WebApplication AddEndPointPassword(this WebApplication app)
         {
 
-            var ApiPassword = app.MapGroup("api/password");
+            var ApiPassword = app.MapGroup("api/password").RequireAuthorization("user");
 
             ApiPassword.MapPost("new", async (ClaimsPrincipal claims, string namePassword, string password, IPasswordService ManagerP, IStringLocalizer<Program> localizerus) =>
             {
@@ -78,21 +84,21 @@ namespace PasswordGen
                 return await ManagerP.NewPassword(claims.Get("username"), claims.Get("password"), namePassword, type) is string s
                        ? Results.Ok(localizerus["passwordCreated"].Value + ":" + s)
                        : Results.BadRequest(localizerus["passwordNotCreated"].Value);
-            }).RequireAuthorization("user");
+            });
             ApiPassword.MapGet("get", async (ClaimsPrincipal claims, string namePassword, IPasswordService ManagerP, IStringLocalizer<Program> localizerus) =>
                 {
 
                     return await ManagerP.GetPassword(claims.Get("username"), claims.Get("password"), namePassword) is PasswordModel p
                            ? Results.Ok(p)
                            : Results.NotFound(localizerus["passwordNotFound"].Value);
-                }).RequireAuthorization("user");
+                });
             ApiPassword.MapGet("get/all", async (ClaimsPrincipal claims, IPasswordService ManagerP, IStringLocalizer<Program> localizerus) =>
             {
 
                 return await ManagerP.GetPassword(claims.Get("username"), claims.Get("password")) is List<PasswordModel> p
                       ? Results.Ok(p)
                       : Results.NotFound(localizerus["userNotFound"].Value);
-            }).RequireAuthorization("user");
+            });
             ApiPassword.MapPut("change", async (ClaimsPrincipal claims, string namePassword, string passwordNew, IPasswordService ManagerP, IStringLocalizer<Program> localizerus) =>
             {
 
@@ -100,14 +106,14 @@ namespace PasswordGen
                        ? Results.Ok(localizerus["passwordChanged"].Value)
                        : Results.BadRequest(localizerus["passwordNotChanged"].Value);
 
-            }).RequireAuthorization("user");
+            });
             ApiPassword.MapDelete("delete", async (ClaimsPrincipal claims, string namePassword, IPasswordService ManagerP, IStringLocalizer<Program> localizerus) =>
             {
 
                 return await ManagerP.DeletePassword(claims.Get("username"), claims.Get("password"), namePassword) is true
                        ? Results.Ok(localizerus["passwordDeleted"].Value)
                        : Results.Problem(localizerus["passwordNotDeleted"].Value);
-            }).RequireAuthorization("user");
+            });
             return app;
         }
     }
