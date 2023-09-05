@@ -18,9 +18,7 @@ builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddControllers();
 
 builder.Services.AddLocalization(option => { option.ResourcesPath = "Resources"; });
-/*builder.Services.AddMvc()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-    .AddDataAnnotationsLocalization();*/
+
 
 builder.Services.Configure<RequestLocalizationOptions>(opt =>
 {
