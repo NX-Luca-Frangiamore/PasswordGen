@@ -90,7 +90,7 @@ namespace PasswordGen
 
                     return await ManagerP.GetPassword(claims.Get("username"), claims.Get("password"), namePassword) is PasswordModel p
                            ? Results.Ok(p)
-                           : Results.NotFound(localizer["passwordNotFound"].Value);
+                           : Results.NotFound(localizerus["passwordNotFound"].Value);
                 });
             ApiPassword.MapGet("get/all", async (ClaimsPrincipal claims, IPasswordService ManagerP, IStringLocalizer<Program> localizerus) =>
             {

@@ -30,8 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             contextMenuStrip1 = new ContextMenuStrip(components);
+            TextUsername = new TextBox();
             TextPassword = new TextBox();
-            TextUser = new TextBox();
             LabelUser = new Label();
             LabelPassword = new Label();
             ButtonLogin = new Button();
@@ -44,24 +44,24 @@
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
             // 
+            // TextUsername
+            // 
+            TextUsername.Location = new Point(11, 53);
+            TextUsername.Name = "TextUsername";
+            TextUsername.Size = new Size(125, 27);
+            TextUsername.TabIndex = 1;
+            // 
             // TextPassword
             // 
-            TextPassword.Location = new Point(11, 98);
+            TextPassword.Location = new Point(12, 118);
             TextPassword.Name = "TextPassword";
             TextPassword.Size = new Size(125, 27);
-            TextPassword.TabIndex = 1;
-            // 
-            // TextUser
-            // 
-            TextUser.Location = new Point(11, 33);
-            TextUser.Name = "TextUser";
-            TextUser.Size = new Size(125, 27);
-            TextUser.TabIndex = 2;
+            TextPassword.TabIndex = 2;
             // 
             // LabelUser
             // 
             LabelUser.AutoSize = true;
-            LabelUser.Location = new Point(11, 10);
+            LabelUser.Location = new Point(12, 30);
             LabelUser.Name = "LabelUser";
             LabelUser.Size = new Size(38, 20);
             LabelUser.TabIndex = 3;
@@ -70,7 +70,7 @@
             // LabelPassword
             // 
             LabelPassword.AutoSize = true;
-            LabelPassword.Location = new Point(11, 75);
+            LabelPassword.Location = new Point(12, 95);
             LabelPassword.Name = "LabelPassword";
             LabelPassword.Size = new Size(70, 20);
             LabelPassword.TabIndex = 4;
@@ -79,7 +79,7 @@
             // 
             // ButtonLogin
             // 
-            ButtonLogin.Location = new Point(25, 152);
+            ButtonLogin.Location = new Point(27, 161);
             ButtonLogin.Name = "ButtonLogin";
             ButtonLogin.Size = new Size(94, 29);
             ButtonLogin.TabIndex = 5;
@@ -89,23 +89,24 @@
             // 
             // ButtonSignIn
             // 
-            ButtonSignIn.Location = new Point(35, 187);
+            ButtonSignIn.Location = new Point(27, 206);
             ButtonSignIn.Name = "ButtonSignIn";
-            ButtonSignIn.Size = new Size(75, 31);
+            ButtonSignIn.Size = new Size(94, 29);
             ButtonSignIn.TabIndex = 6;
             ButtonSignIn.Text = "Sign in";
             ButtonSignIn.UseVisualStyleBackColor = true;
+            ButtonSignIn.Click += ButtonSignIn_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(148, 230);
+            ClientSize = new Size(148, 275);
             Controls.Add(ButtonSignIn);
             Controls.Add(ButtonLogin);
             Controls.Add(LabelPassword);
             Controls.Add(LabelUser);
-            Controls.Add(TextUser);
+            Controls.Add(TextUsername);
             Controls.Add(TextPassword);
             Name = "Form1";
             Text = "Form1";
@@ -117,8 +118,8 @@
         #endregion
 
         private ContextMenuStrip contextMenuStrip1;
+        private TextBox TextUsername;
         private TextBox TextPassword;
-        private TextBox TextUser;
         private Label LabelUser;
         private Label LabelPassword;
         private Button ButtonLogin;
