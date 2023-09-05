@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace WinForms
 {
     public partial class Form1 : Form
@@ -7,14 +9,17 @@ namespace WinForms
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void LabelPassword_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void LabelPassword_Click(object sender, EventArgs e)
+        private async void ButtonLogin_Click(object sender, EventArgs e)
         {
-
+            var client = new HttpClient();
+            var Response=client.PostAsync($"http://localhost:5034/login?username={TextUser.Text}&password={TextPassword.Text}",null);
+            var b=await Response.Result.Content.ReadAsStringAsync();
+            MessageBox.Show(b);
         }
     }
 }

@@ -30,8 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             contextMenuStrip1 = new ContextMenuStrip(components);
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            TextPassword = new TextBox();
+            TextUser = new TextBox();
             LabelUser = new Label();
             LabelPassword = new Label();
             ButtonLogin = new Button();
@@ -44,24 +44,24 @@
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
             // 
-            // textBox1
+            // TextPassword
             // 
-            textBox1.Location = new Point(12, 118);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 27);
-            textBox1.TabIndex = 1;
+            TextPassword.Location = new Point(11, 98);
+            TextPassword.Name = "TextPassword";
+            TextPassword.Size = new Size(125, 27);
+            TextPassword.TabIndex = 1;
             // 
-            // textBox2
+            // TextUser
             // 
-            textBox2.Location = new Point(12, 53);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(125, 27);
-            textBox2.TabIndex = 2;
+            TextUser.Location = new Point(11, 33);
+            TextUser.Name = "TextUser";
+            TextUser.Size = new Size(125, 27);
+            TextUser.TabIndex = 2;
             // 
             // LabelUser
             // 
             LabelUser.AutoSize = true;
-            LabelUser.Location = new Point(12, 30);
+            LabelUser.Location = new Point(11, 10);
             LabelUser.Name = "LabelUser";
             LabelUser.Size = new Size(38, 20);
             LabelUser.TabIndex = 3;
@@ -70,7 +70,7 @@
             // LabelPassword
             // 
             LabelPassword.AutoSize = true;
-            LabelPassword.Location = new Point(12, 95);
+            LabelPassword.Location = new Point(11, 75);
             LabelPassword.Name = "LabelPassword";
             LabelPassword.Size = new Size(70, 20);
             LabelPassword.TabIndex = 4;
@@ -79,18 +79,19 @@
             // 
             // ButtonLogin
             // 
-            ButtonLogin.Location = new Point(12, 170);
+            ButtonLogin.Location = new Point(25, 152);
             ButtonLogin.Name = "ButtonLogin";
             ButtonLogin.Size = new Size(94, 29);
             ButtonLogin.TabIndex = 5;
             ButtonLogin.Text = "Login";
             ButtonLogin.UseVisualStyleBackColor = true;
+            ButtonLogin.Click += ButtonLogin_Click;
             // 
             // ButtonSignIn
             // 
-            ButtonSignIn.Location = new Point(12, 215);
+            ButtonSignIn.Location = new Point(35, 187);
             ButtonSignIn.Name = "ButtonSignIn";
-            ButtonSignIn.Size = new Size(94, 29);
+            ButtonSignIn.Size = new Size(75, 31);
             ButtonSignIn.TabIndex = 6;
             ButtonSignIn.Text = "Sign in";
             ButtonSignIn.UseVisualStyleBackColor = true;
@@ -99,13 +100,13 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(779, 450);
+            ClientSize = new Size(148, 230);
             Controls.Add(ButtonSignIn);
             Controls.Add(ButtonLogin);
             Controls.Add(LabelPassword);
             Controls.Add(LabelUser);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(TextUser);
+            Controls.Add(TextPassword);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
@@ -116,8 +117,8 @@
         #endregion
 
         private ContextMenuStrip contextMenuStrip1;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox TextPassword;
+        private TextBox TextUser;
         private Label LabelUser;
         private Label LabelPassword;
         private Button ButtonLogin;
