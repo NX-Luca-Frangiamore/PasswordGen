@@ -21,6 +21,10 @@ builder.Services.AddSingleton<FactoryBuilder>();
 builder.Services.AddScoped<IUtenteService, UtenteService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 
+IConfiguration configuration = new ConfigurationBuilder()
+                                   .AddJsonFile("appsettings.json")
+                                   .AddEnvironmentVariables()
+                                   .Build();
 builder.Services.AddAuthentication(o => {
     o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -30,7 +34,7 @@ builder.Services.AddAuthentication(o => {
     config.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("6ceccd7405ef4b00b2630009be568cfa")),
+        IssuerSigningKey = new SymmetricSecurityKey(configuration.GetValue<byte[]>("key")),
         ValidateIssuer = false,
         ValidateAudience = false
     };

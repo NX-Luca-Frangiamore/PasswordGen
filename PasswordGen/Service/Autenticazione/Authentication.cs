@@ -13,8 +13,13 @@ namespace PasswordGen.Service.Autenticazione
     public class Authentication
     {
         private IManagerDb Db;
+        private IConfiguration configuration;
         public Authentication(IManagerDb db) {
             this.Db = db;
+            configuration = new ConfigurationBuilder()
+                                   .AddJsonFile("appsettings.json")
+                                   .AddEnvironmentVariables()
+                                   .Build();
         }
         private string GenerateToken(Utente user)
         {
@@ -27,7 +32,7 @@ namespace PasswordGen.Service.Autenticazione
                 new Claim(ClaimTypes.Role,"user")
             }),
                 Expires = DateTime.UtcNow.AddMinutes(30),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes("6ceccd7405ef4b00b2630009be568cfa")), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(configuration.GetValue<byte[]>("key")), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
