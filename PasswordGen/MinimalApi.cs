@@ -6,7 +6,7 @@ using Microsoft.Extensions.Localization;
 using PasswordGen.Service.Autenticazione;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
-using static PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory.FactoryBuilder;
+using static PasswordGen.Service.PasswordService.GeneratorePassword.Factory.FactoryBuilder;
 
 
 namespace PasswordGen
@@ -81,7 +81,7 @@ namespace PasswordGen
 
             ApiPassword.MapPost("new/{type}", async (ClaimsPrincipal claims, string namePassword, TypePassword type, IPasswordService ManagerP, IStringLocalizer<Program> localizerus) =>
             {
-                return await ManagerP.NewPassword(claims.Get("id").GetInt(), namePassword, type) is string s
+                return await ManagerP.NewPasswordRandom(claims.Get("id").GetInt(), namePassword, type) is string s
                        ? Results.Ok(localizerus["passwordCreated"].Value + ":" + s)
                        : Results.BadRequest(localizerus["passwordNotCreated"].Value);
             });

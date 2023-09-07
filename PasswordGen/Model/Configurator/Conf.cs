@@ -8,10 +8,11 @@ namespace PasswordGen.Model.Configurator
     {
         public void Configure(EntityTypeBuilder<Utente> builder)
         {
-            builder.OwnsMany(x => x.PasswordList, s => {
+            builder.OwnsMany(x => x.PasswordList, s =>
+            {
                 s.Property<int>("id").ValueGeneratedOnAdd();
                 s.HasKey("id");
-            }) ;                                            
+            });
         }
     }
 }

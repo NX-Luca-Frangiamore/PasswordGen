@@ -28,10 +28,10 @@ namespace PasswordGen.Repository
         {
             return await db.Utente.FindAsync(id);
         }
-        public override Task<Utente?> GetUtenteWithPassword(int? id)
+/*public override Task<Utente?> GetUtenteWithPassword(int? id)
         {
             return db.Utente.Include(x => x.PasswordList).Where(x=>x.Id==id).FirstOrDefaultAsync();
-        }
+        }*/
         public override async Task<bool> Save()
         {
             return await db.SaveChangesAsync() > 0;

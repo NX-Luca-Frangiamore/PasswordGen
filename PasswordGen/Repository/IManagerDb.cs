@@ -12,7 +12,7 @@ namespace PasswordGen.Repository
         public abstract Task<Utente?> GetUtente(int? id);
         public abstract Task<bool> NewUtente(Utente utente);
         public abstract Task<bool> DeleteUtente(int? id);
-        public abstract Task<Utente?> GetUtenteWithPassword(int? id);
+        //public abstract Task<Utente?> GetUtenteWithPassword(int? id);
         public abstract Task<bool> Save();
     }
 }

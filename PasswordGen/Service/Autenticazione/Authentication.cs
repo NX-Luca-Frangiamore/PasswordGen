@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using PasswordGen.Model;
-using System.Runtime.CompilerServices;
+﻿using PasswordGen.Model;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using PasswordGen.Repository;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Text;
+
 
 namespace PasswordGen.Service.Autenticazione
 {
@@ -31,6 +28,8 @@ namespace PasswordGen.Service.Autenticazione
                 new Claim("id",user.Id+""),
                 new Claim(ClaimTypes.Role,"user")
             }),
+                // Issuer="Luca", chi emette
+                //Audience=, chi deve ricevere il token
                 Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(configuration.GetValue<byte[]>("key")), SecurityAlgorithms.HmacSha256Signature)
             };

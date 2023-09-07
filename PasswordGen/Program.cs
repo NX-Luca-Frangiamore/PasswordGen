@@ -5,7 +5,7 @@ using PasswordGen.Data;
 using PasswordGen.Repository;
 using PasswordGen.Service.Autenticazione;
 using PasswordGen.Service.PasswordService;
-using PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory;
+using PasswordGen.Service.PasswordService.GeneratorePassword.Factory;
 using PasswordGen.Service.UtenteService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +17,8 @@ IConfiguration configuration = new ConfigurationBuilder()
 
 
 
-builder.Services.AddSqlite<Context>("Data Source=Context.db");//il db si chiama context
-builder.Services.AddDbContext<Context>(options => options.UseLazyLoadingProxies().UseSqlite(builder.Configuration.GetConnectionString("Context")));
+builder.Services.AddSqlite<Context>("Data Source=Context.db");
+builder.Services.AddDbContext<Context>(options => options.UseSqlite(builder.Configuration.GetConnectionString("Context")));
 builder.Services.AddScoped<IManagerDb, ManagerDb>();
 builder.Services.AddSingleton<IFactory,FactoryBuilder>();
 builder.Services.AddScoped<IUtenteService, UtenteService>();
@@ -31,7 +31,9 @@ builder.Services.AddAuthentication().AddJwtBearer(config=> {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(configuration.GetValue<byte[]>("key")),
         ValidateIssuer = false,
-        ValidateAudience = false
+      //  ValidIssuer= "Chi deve emette",
+        ValidateAudience = false,
+      //  ValidAudience="chi deve ricevere il token
     };
 });
 builder.Services.AddScoped<Authentication>();
@@ -40,7 +42,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("user", policy => policy.RequireRole("user"));
 });
 builder.Services.AddLocalization(option => { option.ResourcesPath = "Resources"; });
-
 builder.Services.Configure<RequestLocalizationOptions>(opt =>
 {
     opt.SetDefaultCulture("it-IT");

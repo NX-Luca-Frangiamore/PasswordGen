@@ -1,18 +1,19 @@
 ﻿using PasswordGen.Model;
+using PasswordGen.Service.PasswordService.GeneratorePassword.Builder;
 using PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Tipi;
 using System.Data.Common;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata.Ecma335;
 
-namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory
+namespace PasswordGen.Service.PasswordService.GeneratorePassword.Factory
 {
 
-    public class FactoryBuilder:IFactory
+    public class FactoryBuilder : IFactory
     {
-        private Dictionary<TypePassword, IBuilderPassword> Builder=new();
+        private Dictionary<TypePassword, IBuilderPassword> Builder = new();
         public enum TypePassword
         {
-            soft,medium,hard
+            soft, medium, hard
         }
         public FactoryBuilder()
         {
@@ -26,14 +27,14 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory
         }
         private IBuilderPassword GetBuilderSoft()
         {
-            IBuilderPassword p =new BuilderPassword()  
+            IBuilderPassword p = new BuilderPassword()
                                                       .AddGenerazioneMauCaratteriCasuali(3)
                                                       .AddGenerazioneMinCaratteriCasuali(7);
             return p;
         }
         private IBuilderPassword GetBuilderMedium()
         {
-            IBuilderPassword p = new BuilderPassword() 
+            IBuilderPassword p = new BuilderPassword()
                                                       .AddGenerazioneMauCaratteriCasuali(3)
                                                       .AddGenerazioneMNumeriCasuali(2)
                                                       .AddGenerazioneMinCaratteriCasuali(5);
@@ -41,8 +42,8 @@ namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory
         }
         private IBuilderPassword GetBuilderHard()
         {
-            IBuilderPassword p = new BuilderPassword() 
-                                                      .AddGenerazioneMauCaratteriCasuali (3)
+            IBuilderPassword p = new BuilderPassword()
+                                                      .AddGenerazioneMauCaratteriCasuali(3)
                                                       .AddGenerazioneMNumeriCasuali(2)
                                                       .AddGenerazioneMinCaratteriCasuali(3)
                                                       .AddGenerazioneMCaratteriSpecialiCasuali(2);

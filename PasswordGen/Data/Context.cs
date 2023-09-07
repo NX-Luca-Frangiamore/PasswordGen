@@ -13,14 +13,10 @@ namespace PasswordGen.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(Conf).Assembly);
 
         }
-        //usare modelcreate o tipyconfigurator
-        //convenzioni
-        //implemntazione metodi :nullabiliti, struttura metodi
-        //implementazione aspnet modelcreate
-        //implementare typeconfigurator
+
     }
 }
