@@ -1,4 +1,5 @@
-﻿using PasswordGen.Model;
+﻿using Nest;
+using PasswordGen.Model;
 using PasswordGen.Repository;
 using PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory;
 using System.Reflection.Metadata.Ecma335;
@@ -8,17 +9,18 @@ namespace PasswordGen.Service.PasswordService
     public class PasswordService : IPasswordService
     {
         readonly IManagerDb Db;
-        FactoryBuilder? Factory;
-        public PasswordService(IManagerDb db, FactoryBuilder? factory)
+        IFactory? Factory;
+        public PasswordService(IManagerDb db, IFactory? factory)
         {
             Db = db;
             Factory = factory;
         }
 
-        public async Task<bool> ChangePassword(string? username, string? passwordUtente, string nomePassword, string newPassword)
+        public async Task<bool> ChangePassword(int? idUtente, string nomePassword, string newPassword)
         {
-            if(username is null || passwordUtente is null)return false;
-            if (await Db.GetUtenteWithPassword(username, passwordUtente) is Utente u)
+           
+            if(idUtente is null)return false;
+            if (await Db.GetUtenteWithPassword(idUtente) is Utente u)
             {
                 if (u.GetPassword(nomePassword)?.SetPassword(newPassword)??false)
                 {
@@ -28,39 +30,39 @@ namespace PasswordGen.Service.PasswordService
             return false;
         }
 
-        public async Task<bool> DeletePassword(string? username, string? passwordUtente, string nomePassword)
+        public async Task<bool> DeletePassword(int? idUtente, string nomePassword)
         {
-            if (username is null || passwordUtente is null) return false;
-            if ((await Db.GetUtenteWithPassword(username, passwordUtente))?.DeletePassword(nomePassword) is true)
+            if (idUtente is null) return false;
+            if ((await Db.GetUtenteWithPassword(idUtente))?.DeletePassword(nomePassword) is true)
                 return await Db.Save();
             return false;
         }
 
-        public async Task<PasswordModel?> GetPassword(string? username, string? passwordUtente, string nomePassword)
+        public async Task<PasswordModel?> GetPassword(int? idUtente, string nomePassword)
         {
-            if (username is null || passwordUtente is null) return null;
-            return (await Db.GetUtenteWithPassword(username, passwordUtente))?.GetPassword(nomePassword);
+            if (idUtente is null) return null;
+            return (await Db.GetUtenteWithPassword(idUtente))?.GetPassword(nomePassword);
         }
 
-        public async Task<List<PasswordModel>?> GetPassword(string? username, string? passwordUtente)
+        public async Task<List<PasswordModel>?> GetPassword(int? idUtente)
         {
-            if (username is null || passwordUtente is null) return null;
-            return (await Db.GetUtenteWithPassword(username, passwordUtente))?.PasswordList??null;
+            if (idUtente is null) return null;
+            return (await Db.GetUtenteWithPassword(idUtente))?.PasswordList??null;
         }
 
-        public async Task<bool> NewPassword(string? username, string? passwordUtente, string nomePassword, string password)
+        public async Task<bool> NewPassword(int? idUtente, string nomePassword, string password)
         {
-            if (username is null || passwordUtente is null) return false;
-            if ((await Db.GetUtenteWithPassword(username, passwordUtente))?.AddPassword(nomePassword, password) is true)
+            if (idUtente is null) return false;
+            if ((await Db.GetUtenteWithPassword(idUtente))?.AddPassword(nomePassword, password) is true)
                      return await Db.Save();
             return false;
         }
 
-        public async Task<string?> NewPassword(string? username, string? passwordUtente, string namePassword, FactoryBuilder.TypePassword type)
+        public async Task<string?> NewPassword(int? idUtente, string namePassword, FactoryBuilder.TypePassword type)
         {
-            if (username is null || passwordUtente is null) return null;
+            if (idUtente is null) return null;
             if (Factory?.Get(type) is string password)
-               return (await NewPassword(username, passwordUtente, namePassword, password)) ? password : null;
+               return (await NewPassword(idUtente, namePassword, password)) ? password : null;
             return null;
         }
     }

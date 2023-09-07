@@ -28,7 +28,7 @@ namespace PasswordGen.Service.Autenticazione
             {
                 Subject = new ClaimsIdentity(new Claim[] {
                 new Claim("username",user.UsernameUtente),
-                new Claim("password",user.PasswordUtente),
+                new Claim("id",user.Id+""),
                 new Claim(ClaimTypes.Role,"user")
             }),
                 Expires = DateTime.UtcNow.AddMinutes(30),

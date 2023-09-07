@@ -1,37 +1,32 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PasswordGen;
 using PasswordGen.Data;
-using PasswordGen.Model.Configurator;
 using PasswordGen.Repository;
 using PasswordGen.Service.Autenticazione;
 using PasswordGen.Service.PasswordService;
 using PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory;
 using PasswordGen.Service.UtenteService;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddSqlite<Context>("Data Source=Context.db");//il db si chiama context
-builder.Services.AddDbContext<Context>(options => options.UseLazyLoadingProxies().UseSqlite(builder.Configuration.GetConnectionString("Context")));
-builder.Services.AddScoped<IManagerDb, ManagerDb>();
-builder.Services.AddSingleton<FactoryBuilder>();
-builder.Services.AddScoped<IUtenteService, UtenteService>();
-builder.Services.AddScoped<IPasswordService, PasswordService>();
 
 IConfiguration configuration = new ConfigurationBuilder()
                                    .AddJsonFile("appsettings.json")
                                    .AddEnvironmentVariables()
                                    .Build();
-builder.Services.AddAuthentication(o => {
-    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(config=> {
+
+
+
+builder.Services.AddSqlite<Context>("Data Source=Context.db");//il db si chiama context
+builder.Services.AddDbContext<Context>(options => options.UseLazyLoadingProxies().UseSqlite(builder.Configuration.GetConnectionString("Context")));
+builder.Services.AddScoped<IManagerDb, ManagerDb>();
+builder.Services.AddSingleton<IFactory,FactoryBuilder>();
+builder.Services.AddScoped<IUtenteService, UtenteService>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddAuthentication().AddJwtBearer(config=> {
     config.RequireHttpsMetadata = false;
     config.SaveToken = true;
-    config.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    config.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(configuration.GetValue<byte[]>("key")),
@@ -45,9 +40,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("user", policy => policy.RequireRole("user"));
 });
 builder.Services.AddLocalization(option => { option.ResourcesPath = "Resources"; });
-/*builder.Services.AddMvc()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-    .AddDataAnnotationsLocalization();*/
 
 builder.Services.Configure<RequestLocalizationOptions>(opt =>
 {
@@ -55,15 +47,12 @@ builder.Services.Configure<RequestLocalizationOptions>(opt =>
     opt.AddSupportedCultures("en-US", "it-IT");
     opt.AddSupportedUICultures("en-US", "it-IT");
 });
-
 var app = builder.Build();
+
 app.UseRequestLocalization();
 app.AddEndPointPassword().AddEndPointUtente();
 app.UseAuthentication();
 app.UseAuthorization();
-
-
-
 
 app.Run();
 

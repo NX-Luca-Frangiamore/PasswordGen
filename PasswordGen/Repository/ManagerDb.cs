@@ -14,23 +14,29 @@ namespace PasswordGen.Repository
             db.Utente.Add(utente);
             return await Save();
         }
-        public async override Task<bool> DeleteUtente(string username, string passwordUsername)
+        public async override Task<bool> DeleteUtente(int? id)
         {
-            if (await GetUtente(username, passwordUsername) is Utente u)
+            if (db.Utente.Find(id) is Utente u)
                 db.Utente.Remove(u);
             return await Save();
         }
         public override async Task<Utente?> GetUtente(string username, string passwordUsername)
         {
-            return await db.Utente.Where(x => (x.UsernameUtente == username && x.PasswordUtente == passwordUsername)).FirstOrDefaultAsync();
+            return await db.Utente.Where(x=>x.UsernameUtente==username && x.PasswordUtente==passwordUsername).FirstOrDefaultAsync();
         }
-        public override async Task<Utente?> GetUtenteWithPassword(string username, string passwordUsername)
+        public override async Task<Utente?> GetUtente(int? id)
         {
-            return await db.Utente.Include(x => x.PasswordList).Where(x => x.UsernameUtente == username && x.PasswordUtente == passwordUsername).FirstOrDefaultAsync();
+            return await db.Utente.FindAsync(id);
+        }
+        public override Task<Utente?> GetUtenteWithPassword(int? id)
+        {
+            return db.Utente.Include(x => x.PasswordList).Where(x=>x.Id==id).FirstOrDefaultAsync();
         }
         public override async Task<bool> Save()
         {
             return await db.SaveChangesAsync() > 0;
         }
+        
+
     }
 }

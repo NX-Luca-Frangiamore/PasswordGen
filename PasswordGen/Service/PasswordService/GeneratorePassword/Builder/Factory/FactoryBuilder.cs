@@ -7,7 +7,7 @@ using System.Reflection.Metadata.Ecma335;
 namespace PasswordGen.Service.PasswordService.GeneratorePassword.Builder.Factory
 {
 
-    public class FactoryBuilder
+    public class FactoryBuilder:IFactory
     {
         private Dictionary<TypePassword, IBuilderPassword> Builder=new();
         public enum TypePassword
