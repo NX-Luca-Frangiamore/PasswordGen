@@ -9,29 +9,26 @@ namespace PasswordGen.Repository
         public ManagerDb(Context db) : base(db)
         {
         }
-        public async override Task<bool> NewUtente(Utente utente)
+        public override Task<bool> NewUtente(Utente utente)
         {
             db.Utente.Add(utente);
-            return await Save();
+            return Save();
         }
         public async override Task<bool> DeleteUtente(int? id)
         {
-            if (db.Utente.Find(id) is Utente u)
+            if ((await GetUtente(id)) is Utente u)
                 db.Utente.Remove(u);
             return await Save();
         }
-        public override async Task<Utente?> GetUtente(string username, string passwordUsername)
+        public override Task<Utente?> GetUtente(string username, string passwordUsername)
         {
-            return await db.Utente.Where(x=>x.UsernameUtente==username && x.PasswordUtente==passwordUsername).FirstOrDefaultAsync();
+            return db.Utente.Where(x=>x.UsernameUtente==username && x.PasswordUtente==passwordUsername).FirstOrDefaultAsync();
         }
-        public override async Task<Utente?> GetUtente(int? id)
+        public override ValueTask<Utente?> GetUtente(int? id)
         {
-            return await db.Utente.FindAsync(id);
+            return db.Utente.FindAsync(id);
         }
-/*public override Task<Utente?> GetUtenteWithPassword(int? id)
-        {
-            return db.Utente.Include(x => x.PasswordList).Where(x=>x.Id==id).FirstOrDefaultAsync();
-        }*/
+
         public override async Task<bool> Save()
         {
             return await db.SaveChangesAsync() > 0;

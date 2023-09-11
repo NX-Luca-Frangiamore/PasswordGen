@@ -1,4 +1,6 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PasswordGen.Model
 {
@@ -59,6 +61,10 @@ namespace PasswordGen.Model
             }
             return Changed;
 
+        }
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this);
         }
     }
 

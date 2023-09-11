@@ -1,8 +1,6 @@
-﻿using Nest;
-using PasswordGen.Model;
+﻿using PasswordGen.Model;
 using PasswordGen.Repository;
 using PasswordGen.Service.PasswordService.GeneratorePassword.Factory;
-using System.Reflection.Metadata.Ecma335;
 
 namespace PasswordGen.Service.PasswordService
 {

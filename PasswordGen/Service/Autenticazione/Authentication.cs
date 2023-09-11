@@ -10,10 +10,10 @@ namespace PasswordGen.Service.Autenticazione
     public class Authentication
     {
         private IManagerDb Db;
-        private IConfiguration configuration;
+        private IConfiguration Configuration;
         public Authentication(IManagerDb db) {
             this.Db = db;
-            configuration = new ConfigurationBuilder()
+            Configuration = new ConfigurationBuilder()
                                    .AddJsonFile("appsettings.json")
                                    .AddEnvironmentVariables()
                                    .Build();
@@ -31,7 +31,7 @@ namespace PasswordGen.Service.Autenticazione
                 // Issuer="Luca", chi emette
                 //Audience=, chi deve ricevere il token
                 Expires = DateTime.UtcNow.AddMinutes(30),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(configuration.GetValue<byte[]>("key")), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Configuration.GetValue<byte[]>("key")), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);

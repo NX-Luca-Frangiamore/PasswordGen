@@ -15,7 +15,11 @@ IConfiguration configuration = new ConfigurationBuilder()
                                    .AddEnvironmentVariables()
                                    .Build();
 
-
+Task.Run(() =>
+{
+    Thread.Sleep(5000);
+    Console.Write("ciao");
+});
 
 builder.Services.AddSqlite<Context>("Data Source=Context.db");
 builder.Services.AddDbContext<Context>(options => options.UseSqlite(builder.Configuration.GetConnectionString("Context")));
@@ -42,6 +46,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("user", policy => policy.RequireRole("user"));
 });
 builder.Services.AddLocalization(option => { option.ResourcesPath = "Resources"; });
+
 builder.Services.Configure<RequestLocalizationOptions>(opt =>
 {
     opt.SetDefaultCulture("it-IT");
