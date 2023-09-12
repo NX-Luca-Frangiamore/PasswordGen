@@ -1,4 +1,6 @@
 ﻿
+using PasswordGen.Service.Credenziali;
+
 namespace PasswordGen.Model
 { 
     public class PasswordModel

@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using PasswordGen.Service.Credenziali;
 
 namespace PasswordGen.Model
 {
@@ -49,7 +50,7 @@ namespace PasswordGen.Model
             bool Changed= false;
             if (username is not null)
             {
-                if (!CredenzialiManger.VerificaUserName(username)) return false;
+                if (!CredenzialiManger.VerificaUsername(username)) return false;
                 this.UsernameUtente = username;
                 Changed = true;
             }

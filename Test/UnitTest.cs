@@ -30,7 +30,7 @@ namespace UnitTest
         }
         [Theory]
         [InlineData("luca", "12356")]
-        [InlineData("peppe1", "fgf")]
+        [InlineData("peppe1", "fg7f")]
         public async void Creation_ValidUser_Allowed(string username, string password)
         {
             Mock<IManagerDb> mock = new Mock<IManagerDb>(null);
@@ -74,7 +74,7 @@ namespace UnitTest
         }
         [Theory]
         [InlineData("luca", "123f3g", "gma4il", "24442")]
-        [InlineData("luca", "3ffrf", "gl", "88333")]
+        [InlineData("luca", "3ffrf", "gl7", "88333")]
 
 
         public async void Adding_ValidPassword_Allowed(string username, string passwordUsername, string passwordName, string password)
