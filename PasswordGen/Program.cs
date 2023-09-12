@@ -15,12 +15,6 @@ IConfiguration configuration = new ConfigurationBuilder()
                                    .AddEnvironmentVariables()
                                    .Build();
 
-Task.Run(() =>
-{
-    Thread.Sleep(5000);
-    Console.Write("ciao");
-});
-
 builder.Services.AddSqlite<Context>("Data Source=Context.db");
 builder.Services.AddDbContext<Context>(options => options.UseSqlite(builder.Configuration.GetConnectionString("Context")));
 builder.Services.AddScoped<IManagerDb, ManagerDb>();
