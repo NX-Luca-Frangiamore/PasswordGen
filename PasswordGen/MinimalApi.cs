@@ -21,7 +21,7 @@ namespace PasswordGen
         {
             try
             {
-                return int.Parse(s);
+                return int.Parse(s??"");
             }catch { return null; }
         }
     }
