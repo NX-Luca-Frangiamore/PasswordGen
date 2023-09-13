@@ -1,7 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-
-namespace PasswordGen.Service.Credenziali
+﻿namespace PasswordGen.Service.VerificaCredenziali
 {
     public interface ICheckCredenziali
     {

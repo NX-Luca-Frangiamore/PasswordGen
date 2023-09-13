@@ -1,20 +1,17 @@
-﻿using PasswordGen.Model;
+﻿
 using PasswordGen.Service.PasswordService.GeneratorePassword.Builder;
-using System.Data.Common;
-using System.Net.NetworkInformation;
-using System.Reflection.Metadata.Ecma335;
 
 namespace PasswordGen.Service.PasswordService.GeneratorePassword.Factory
 {
 
-    public class FactoryBuilder : IFactory
+    public class FactoryBuilderPassword : IFactoryBuilderPassword
     {
-        private Dictionary<TypePassword, IBuilderPassword> Builder = new();
+        private readonly Dictionary<TypePassword, IBuilderPassword> Builder = new();
         public enum TypePassword
         {
             soft, medium, hard
         }
-        public FactoryBuilder()
+        public FactoryBuilderPassword()
         {
             Builder[TypePassword.soft] = GetBuilderSoft();
             Builder[TypePassword.medium] = GetBuilderMedium();

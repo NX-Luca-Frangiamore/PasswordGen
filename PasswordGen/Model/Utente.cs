@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using PasswordGen.Service.Credenziali;
+using PasswordGen.Service.VerificaCredenziali;
 
 namespace PasswordGen.Model
 {

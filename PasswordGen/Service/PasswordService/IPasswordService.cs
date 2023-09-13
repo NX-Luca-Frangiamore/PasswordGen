@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PasswordGen.Model;
-using static PasswordGen.Service.PasswordService.GeneratorePassword.Factory.FactoryBuilder;
+using static PasswordGen.Service.PasswordService.GeneratorePassword.Factory.FactoryBuilderPassword;
 
 namespace PasswordGen.Service.PasswordService
 {

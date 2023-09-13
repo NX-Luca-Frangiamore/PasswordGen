@@ -1,5 +1,5 @@
 ﻿
-using PasswordGen.Service.Credenziali;
+using PasswordGen.Service.VerificaCredenziali;
 
 namespace PasswordGen.Model
 { 

@@ -1,12 +1,10 @@
 ﻿using PasswordGen.Service.UtenteService;
 using PasswordGen.Service.PasswordService;
 using PasswordGen.Model;
-using PasswordGen.Service.PasswordService.GeneratorePassword;
 using Microsoft.Extensions.Localization;
 using PasswordGen.Service.Autenticazione;
-using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
-using static PasswordGen.Service.PasswordService.GeneratorePassword.Factory.FactoryBuilder;
+using static PasswordGen.Service.PasswordService.GeneratorePassword.Factory.FactoryBuilderPassword;
 
 
 namespace PasswordGen
@@ -56,7 +54,7 @@ namespace PasswordGen
                 {
                     return await MangerU.ChangeUtente(claims.Get("id").GetInt(), usernameNew, passwordNew) is true
                            ? Results.Ok(localizerus["credentialChanged"].Value)
-                           : Results.Problem(localizerus["credentialNotChanged"].Value);
+                           : Results.BadRequest(localizerus["credentialNotChanged"].Value);
                 });
             ApiUtente.MapDelete("delete", async (ClaimsPrincipal claims, IUtenteService MangerU, IStringLocalizer<Program> localizerus) =>
                 {
@@ -112,7 +110,7 @@ namespace PasswordGen
 
                 return await ManagerP.DeletePassword(claims.Get("id").GetInt(), namePassword) is true
                        ? Results.Ok(localizerus["passwordDeleted"].Value)
-                       : Results.Problem(localizerus["passwordNotDeleted"].Value);
+                       : Results.BadRequest(localizerus["passwordNotDeleted"].Value);
             });
             return app;
         }

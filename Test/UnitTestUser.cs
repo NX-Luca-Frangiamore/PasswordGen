@@ -15,8 +15,8 @@ namespace User
         {
             var u = Utente.Create(username, passwordUsername);
 
-            u.UsernameUtente.Should().Be(username);
-            u.PasswordUtente.Should().Be(passwordUsername);
+            u!.UsernameUtente.Should().Be(username);
+            u!.PasswordUtente.Should().Be(passwordUsername);
 
         }
         [Theory]
@@ -41,8 +41,8 @@ namespace User
             IUtenteService utenteService = new UtenteService(mock.Object);
 
             var u = await utenteService.GetUtente(1);
-            u.UsernameUtente.Should().NotBe(newUsername);
-            u.PasswordUtente.Should().NotBe(newPassword);
+            u!.UsernameUtente.Should().NotBe(newUsername);
+            u!.PasswordUtente.Should().NotBe(newPassword);
 
         }
 
@@ -59,8 +59,8 @@ namespace User
             await utenteService.ChangeUtente(1,newUsername,newPassword);
 
             var u=await utenteService.GetUtente(1);
-            u.UsernameUtente.Should().Be(newUsername??username);
-            u.PasswordUtente.Should().Be(newPassword??passwordUsername);
+            u!.UsernameUtente.Should().Be(newUsername??username);
+            u!.PasswordUtente.Should().Be(newPassword??passwordUsername);
         }
         [Theory]
         [InlineData("peppe", "1g2")]

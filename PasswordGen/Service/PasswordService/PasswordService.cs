@@ -7,8 +7,8 @@ namespace PasswordGen.Service.PasswordService
     public class PasswordService : IPasswordService
     {
         readonly IManagerDb Db;
-        IFactory? Factory;
-        public PasswordService(IManagerDb db, IFactory? factory)
+        readonly IFactoryBuilderPassword Factory;
+        public PasswordService(IManagerDb db, IFactoryBuilderPassword factory)
         {
             Db = db;
             Factory = factory;
@@ -56,7 +56,7 @@ namespace PasswordGen.Service.PasswordService
             return false;
         }
 
-        public async Task<string?> NewPasswordRandom(int? idUtente, string namePassword, FactoryBuilder.TypePassword type)
+        public async Task<string?> NewPasswordRandom(int? idUtente, string namePassword, FactoryBuilderPassword.TypePassword type)
         {
             if (idUtente is null) return null;
             if (Factory?.Get(type) is string password)

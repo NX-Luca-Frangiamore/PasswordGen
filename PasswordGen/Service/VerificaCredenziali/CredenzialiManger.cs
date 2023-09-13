@@ -1,4 +1,4 @@
-﻿namespace PasswordGen.Service.Credenziali
+﻿namespace PasswordGen.Service.VerificaCredenziali
 {
     public class CredenzialiManger
     {

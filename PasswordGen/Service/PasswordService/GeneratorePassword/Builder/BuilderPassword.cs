@@ -1,5 +1,4 @@
-﻿using Nest;
-using PasswordGen.Model;
+﻿using PasswordGen.Model;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
